@@ -55,6 +55,12 @@ async def lifespan(app: FastAPI):
             conn.execute(text(
                 "ALTER TABLE users ADD COLUMN IF NOT EXISTS pending_quiz_correct VARCHAR(1)"
             ))
+            conn.execute(text(
+                "ALTER TABLE users ADD COLUMN IF NOT EXISTS name VARCHAR"
+            ))
+            conn.execute(text(
+                "ALTER TABLE users ADD COLUMN IF NOT EXISTS skill_level TEXT"
+            ))
             conn.commit()
     except Exception:
         pass
