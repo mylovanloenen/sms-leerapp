@@ -13,7 +13,7 @@ from app.models import User
 from app.curriculum import (
     LANGUAGES, WELCOME_MESSAGE, get_module, get_step_type,
     total_modules, steps_in_module, is_yes,
-    lesson_index, quiz_index,
+    lesson_index, quiz_index, get_lesson_topic,
 )
 from app import ai
 
@@ -196,8 +196,8 @@ def _gen_lesson(user: User, lang: str) -> str:
     module = get_module(user.module)
     if not module:
         return "Something went wrong. Reply RESTART."
-    topic = module["topic"].get(lang, module["topic"]["EN"])
     lnr = lesson_index(user.module, user.step)
+    topic = get_lesson_topic(user.module, lnr, lang)
     return ai.generate_lesson(topic, lnr, lang, name=user.name, skill=user.skill_level)
 
 

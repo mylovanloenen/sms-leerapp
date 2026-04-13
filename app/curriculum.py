@@ -32,6 +32,22 @@ MODULES = [
             "FR": "envoyer et lire des SMS sur un smartphone",
             "ES": "enviar y leer SMS en un smartphone",
         },
+        "lessons": [
+            {
+                "EN": "opening the Messages app and reading a received SMS",
+                "NL": "de Berichten-app openen en een ontvangen SMS lezen",
+                "DE": "die Nachrichten-App öffnen und eine empfangene SMS lesen",
+                "FR": "ouvrir l'application Messages et lire un SMS reçu",
+                "ES": "abrir la aplicación Mensajes y leer un SMS recibido",
+            },
+            {
+                "EN": "typing and sending a new SMS to a contact",
+                "NL": "een nieuwe SMS typen en versturen naar een contact",
+                "DE": "eine neue SMS tippen und an einen Kontakt senden",
+                "FR": "taper et envoyer un nouveau SMS à un contact",
+                "ES": "escribir y enviar un nuevo SMS a un contacto",
+            },
+        ],
         "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
     },
     {
@@ -44,6 +60,22 @@ MODULES = [
             "FR": "passer des appels et enregistrer des contacts",
             "ES": "hacer llamadas y guardar contactos en el teléfono",
         },
+        "lessons": [
+            {
+                "EN": "making a phone call: opening the dial pad and calling a number",
+                "NL": "bellen: het toetsenbord openen en een nummer bellen",
+                "DE": "Anruf tätigen: die Wähltastatur öffnen und eine Nummer anrufen",
+                "FR": "passer un appel: ouvrir le clavier et appeler un numéro",
+                "ES": "hacer una llamada: abrir el teclado y marcar un número",
+            },
+            {
+                "EN": "saving a new contact with a name and phone number",
+                "NL": "een nieuw contact opslaan met naam en telefoonnummer",
+                "DE": "einen neuen Kontakt mit Name und Telefonnummer speichern",
+                "FR": "enregistrer un nouveau contact avec un nom et un numéro",
+                "ES": "guardar un nuevo contacto con nombre y número de teléfono",
+            },
+        ],
         "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
     },
     {
@@ -56,6 +88,22 @@ MODULES = [
             "FR": "utiliser WhatsApp pour messages gratuits, photos et appels vidéo",
             "ES": "usar WhatsApp para mensajes gratis, fotos y videollamadas",
         },
+        "lessons": [
+            {
+                "EN": "installing WhatsApp and sending a first free text message",
+                "NL": "WhatsApp installeren en een eerste gratis bericht sturen",
+                "DE": "WhatsApp installieren und eine erste kostenlose Nachricht senden",
+                "FR": "installer WhatsApp et envoyer un premier message gratuit",
+                "ES": "instalar WhatsApp y enviar un primer mensaje gratuito",
+            },
+            {
+                "EN": "sending a photo and making a video call via WhatsApp",
+                "NL": "een foto sturen en videobellen via WhatsApp",
+                "DE": "ein Foto senden und per WhatsApp videotelefonieren",
+                "FR": "envoyer une photo et passer un appel vidéo via WhatsApp",
+                "ES": "enviar una foto y hacer una videollamada por WhatsApp",
+            },
+        ],
         "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
     },
     {
@@ -68,6 +116,22 @@ MODULES = [
             "FR": "comprendre et utiliser l'email sur un smartphone",
             "ES": "entender y usar el correo electrónico en el teléfono",
         },
+        "lessons": [
+            {
+                "EN": "opening the email app and reading a received email",
+                "NL": "de e-mailapp openen en een ontvangen e-mail lezen",
+                "DE": "die E-Mail-App öffnen und eine empfangene E-Mail lesen",
+                "FR": "ouvrir l'application email et lire un email reçu",
+                "ES": "abrir la aplicación de correo y leer un correo recibido",
+            },
+            {
+                "EN": "writing and sending a new email with subject and message",
+                "NL": "een nieuwe e-mail schrijven en versturen met onderwerp en bericht",
+                "DE": "eine neue E-Mail mit Betreff und Nachricht schreiben und senden",
+                "FR": "écrire et envoyer un nouvel email avec objet et message",
+                "ES": "escribir y enviar un nuevo correo con asunto y mensaje",
+            },
+        ],
         "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
     },
 ]
@@ -88,6 +152,18 @@ def get_step_type(module_id: int, step_nr: int) -> str | None:
     if step_nr < 1 or step_nr > len(steps):
         return None
     return steps[step_nr - 1]
+
+
+def get_lesson_topic(module_id: int, lesson_nr: int, lang: str) -> str:
+    """Geeft het specifieke sub-onderwerp voor les lesson_nr (1-based)."""
+    module = get_module(module_id)
+    if not module or "lessons" not in module:
+        return module["topic"].get(lang, module["topic"]["EN"]) if module else ""
+    lessons = module["lessons"]
+    idx = lesson_nr - 1
+    if idx < 0 or idx >= len(lessons):
+        return module["topic"].get(lang, module["topic"]["EN"])
+    return lessons[idx].get(lang, lessons[idx]["EN"])
 
 
 def total_modules() -> int:
