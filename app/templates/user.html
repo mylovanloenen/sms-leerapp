@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}{{ user.phone }} — SMS Leerapp{% endblock %}
+
+{% block content %}
+<a href="/" class="btn btn-sm btn-outline-secondary mb-4">
+  <i class="bi bi-arrow-left"></i> Terug
+</a>
+
+<div class="row g-4">
+  <!-- Info card -->
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-person-circle me-2"></i>Gebruiker</h5>
+        <hr />
+        <dl class="row mb-0">
+          <dt class="col-5">Telefoon</dt>
+          <dd class="col-7 font-monospace">{{ user.phone }}</dd>
+
+          <dt class="col-5">Taal</dt>
+          <dd class="col-7">{{ language_name }}</dd>
+
+          <dt class="col-5">Status</dt>
+          <dd class="col-7">
+            <span class="badge badge-state-{{ user.state }}">{{ user.state }}</span>
+          </dd>
+
+          <dt class="col-5">Module</dt>
+          <dd class="col-7">{{ user.module }}</dd>
+
+          <dt class="col-5">Stap</dt>
+          <dd class="col-7">{{ user.step }}</dd>
+
+          <dt class="col-5">Score</dt>
+          <dd class="col-7">
+            {% if user.total_questions %}
+              {{ user.correct_answers }}/{{ user.total_questions }}
+              {% if score_pct is not none %}
+                <span class="badge {% if score_pct >= 80 %}bg-success{% elif score_pct >= 50 %}bg-warning text-dark{% else %}bg-danger{% endif %}">
+                  {{ score_pct }}%
+                </span>
+              {% endif %}
+            {% else %}
+              <span class="text-muted">—</span>
+            {% endif %}
+          </dd>
+
+          <dt class="col-5">Gestart</dt>
+          <dd class="col-7">
+            <small>{{ user.created_at.strftime('%d-%m-%Y %H:%M') if user.created_at else '—' }}</small>
+          </dd>
+
+          <dt class="col-5">Actief</dt>
+          <dd class="col-7">
+            <small>{{ user.last_active.strftime('%d-%m-%Y %H:%M') if user.last_active else '—' }}</small>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress card -->
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-bar-chart-steps me-2"></i>Voortgang</h5>
+        <hr />
+        {% for m in module_progress %}
+        <div class="mb-3">
+          <strong>{{ m.title }}</strong>
+          <div class="d-flex flex-wrap gap-2 mt-1">
+            {% for s in m.steps %}
+            <span class="step-{{ s.status }}">
+              {% if s.status == 'done' %}
+                <i class="bi bi-check-circle-fill"></i>
+              {% elif s.status == 'current' %}
+                <i class="bi bi-arrow-right-circle-fill"></i>
+              {% else %}
+                <i class="bi bi-circle"></i>
+              {% endif %}
+              {% if s.type == 'lesson' %}Les {{ s.step }}
+              {% elif s.type == 'quiz' %}Quiz
+              {% else %}Klaar
+              {% endif %}
+            </span>
+            {% endfor %}
+          </div>
+        </div>
+        {% if not loop.last %}<hr class="my-2" />{% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
