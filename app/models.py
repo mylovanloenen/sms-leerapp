@@ -8,7 +8,8 @@ class User(Base):
 
     phone = Column(String, primary_key=True, index=True)
     language = Column(String, nullable=True)
-    state = Column(String, default="NEW")        # NEW | LANG_PENDING | LEARNING | COMPLETED
+    # States: LANG_PENDING | NAME_PENDING | SKILL_PENDING | LEARNING | COMPLETED
+    state = Column(String, default="LANG_PENDING")
     module = Column(Integer, default=1)
     step = Column(Integer, default=1)
     correct_answers = Column(Integer, default=0)
@@ -16,6 +17,10 @@ class User(Base):
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     last_active = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-    # Stores the current quiz question + correct answer while waiting for response
+    # Onboarding
+    name = Column(String, nullable=True)
+    skill_level = Column(Text, nullable=True)   # vrije tekst van de gebruiker
+
+    # Huidige quizvraag
     pending_quiz_text = Column(Text, nullable=True)
     pending_quiz_correct = Column(String(1), nullable=True)
