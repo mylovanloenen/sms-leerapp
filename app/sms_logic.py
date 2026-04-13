@@ -1,18 +1,16 @@
 """
-Core state machine: processes an incoming SMS and returns a reply.
+State machine: verwerkt een inkomende SMS en geeft een antwoord.
 """
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
 from app.models import User
 from app.curriculum import (
-    LANGUAGES,
-    WELCOME_MESSAGE,
-    get_step,
-    get_module,
-    total_modules,
-    is_yes,
+    LANGUAGES, WELCOME_MESSAGE, get_module, get_step_type,
+    total_modules, steps_in_module, is_yes,
+    lesson_index, quiz_index,
 )
+from app import ai
 
 RESTART_WORDS = ["RESTART", "OPNIEUW", "NEU", "RECOMMENCER", "REINICIAR"]
 
@@ -28,10 +26,9 @@ def process_message(phone: str, body: str, db: Session) -> str:
         db.refresh(user)
         return WELCOME_MESSAGE
 
-    # Update last active
     user.last_active = datetime.now(timezone.utc)
 
-    # ── RESTART at any point ──────────────────────────────────────
+    # ── RESTART ───────────────────────────────────────────────────
     if text.upper() in RESTART_WORDS:
         user.state = "LANG_PENDING"
         user.language = None
@@ -39,128 +36,204 @@ def process_message(phone: str, body: str, db: Session) -> str:
         user.step = 1
         user.correct_answers = 0
         user.total_questions = 0
+        user.pending_quiz_text = None
+        user.pending_quiz_correct = None
         db.commit()
         return WELCOME_MESSAGE
 
-    # ── LANGUAGE PENDING ─────────────────────────────────────────
+    # ── TAAL KIEZEN ───────────────────────────────────────────────
     if user.state == "LANG_PENDING":
         lang = text.strip().upper()
         if lang not in LANGUAGES:
-            return (
-                "Please reply with one of:\n"
-                "EN / NL / DE / FR / ES\n\n"
-                "(Or type RESTART to start over)"
-            )
-        user.language = lang
-        user.state = "LEARNING"
-        user.module = 1
-        user.step = 1
-        db.commit()
-        # Send first lesson
-        step_data = get_step(1, 1)
-        return step_data["content"][lang]
+            lang = ai.detect_language_from_text(text)
+        if lang in LANGUAGES:
+            return _set_language_and_start(user, lang, db)
+        return (
+            "Please reply: EN / NL / DE / FR / ES\n"
+            "(Or RESTART to start over)"
+        )
 
-    # ── LEARNING ─────────────────────────────────────────────────
+    # ── AAN HET LEREN ─────────────────────────────────────────────
     if user.state == "LEARNING":
         lang = user.language or "EN"
-        step_data = get_step(user.module, user.step)
+        step_type = get_step_type(user.module, user.step)
 
-        if not step_data:
-            return _t(lang, "Hmm, something went wrong. Reply RESTART to begin again.")
-
-        stype = step_data["type"]
-
-        # LESSON step — any reply advances
-        if stype == "lesson":
+        # LESSON
+        if step_type == "lesson":
+            if _is_question(text):
+                module = get_module(user.module)
+                context = module["topic"].get(lang, "") if module else ""
+                answer = ai.answer_free_question(text, context, lang)
+                if answer:
+                    return answer
             return _advance(user, lang, db)
 
-        # QUIZ step — expect A, B or C
-        if stype == "quiz":
+        # QUIZ
+        if step_type == "quiz":
+            # Nog geen quizvraag gepresenteerd → genereer en sla op
+            if not user.pending_quiz_text:
+                return _present_quiz(user, lang, db)
+
+            # Evalueer antwoord
             answer = text.strip().upper()
             if answer not in ("A", "B", "C"):
+                answer = ai.interpret_quiz_answer(text, user.pending_quiz_text, lang)
+
+            if not answer:
+                if _is_question(text):
+                    module = get_module(user.module)
+                    context = module["topic"].get(lang, "") if module else ""
+                    ai_reply = ai.answer_free_question(text, context, lang)
+                    if ai_reply:
+                        return ai_reply
                 return _t(
                     lang,
-                    "Please reply with A, B or C.",
+                    "Please reply A, B or C.",
                     "Antwoord A, B of C.",
                     "Antworten Sie A, B oder C.",
                     "Répondez A, B ou C.",
                     "Responda A, B o C.",
                 )
 
+            correct = answer == user.pending_quiz_correct
+            feedback = ai.generate_feedback(correct, answer, user.pending_quiz_correct or "?", lang)
+
             user.total_questions += 1
-            if answer == step_data["correct"]:
+            if correct:
                 user.correct_answers += 1
-                feedback = step_data["feedback_correct"][lang]
-            else:
-                feedback = step_data["feedback_wrong"][lang]
+            user.pending_quiz_text = None
+            user.pending_quiz_correct = None
             db.commit()
 
-            next_reply = _advance(user, lang, db)
-            return f"{feedback}\n\n{next_reply}"
+            next_content = _advance(user, lang, db)
+            return f"{feedback}\n\n{next_content}"
 
-        # MODULE COMPLETE step — wait for yes
-        if stype == "module_complete":
+        # MODULE COMPLETE
+        if step_type == "module_complete":
             if is_yes(text, lang):
                 return _advance(user, lang, db)
-            # Show the module complete message again
-            return step_data["content"][lang]
+            if _is_question(text):
+                module = get_module(user.module)
+                context = module["topic"].get(lang, "") if module else ""
+                ai_reply = ai.answer_free_question(text, context, lang)
+                if ai_reply:
+                    return ai_reply
+            # Herhaal het afrondingsbericht
+            return _generate_module_complete_msg(user.module, lang)
 
-    # ── COMPLETED ────────────────────────────────────────────────
+    # ── KLAAR ─────────────────────────────────────────────────────
     if user.state == "COMPLETED":
         lang = user.language or "EN"
-        if text.upper() in RESTART_WORDS:
-            user.state = "LANG_PENDING"
-            user.language = None
-            user.module = 1
-            user.step = 1
-            db.commit()
-            return WELCOME_MESSAGE
         return _t(
             lang,
-            "You have completed all modules! 🌟 Reply RESTART to do it again.",
-            "Je hebt alle modules voltooid! 🌟 Antwoord OPNIEUW om opnieuw te beginnen.",
-            "Sie haben alle Module abgeschlossen! 🌟 Antworten Sie NEU um neu zu starten.",
-            "Vous avez terminé tous les modules! 🌟 Répondez RECOMMENCER pour reprendre.",
-            "¡Ha completado todos los módulos! 🌟 Responda REINICIAR para volver a empezar.",
+            "You completed all modules! 🌟 Reply RESTART to do it again.",
+            "Alle modules klaar! 🌟 Antwoord OPNIEUW om opnieuw te beginnen.",
+            "Alle Module abgeschlossen! 🌟 Antworten Sie NEU.",
+            "Tous les modules terminés! 🌟 Répondez RECOMMENCER.",
+            "¡Todos los módulos! 🌟 Responda REINICIAR.",
         )
 
-    return "Something went wrong. Reply RESTART to start over."
+    return "Something went wrong. Reply RESTART."
+
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def _set_language_and_start(user: User, lang: str, db: Session) -> str:
+    user.language = lang
+    user.state = "LEARNING"
+    user.module = 1
+    user.step = 1
+    db.commit()
+    return _generate_step_content(user, lang, db)
+
+
+def _present_quiz(user: User, lang: str, db: Session) -> str:
+    """Genereer een quizvraag, sla op en stuur."""
+    module = get_module(user.module)
+    if not module:
+        return "Something went wrong. Reply RESTART."
+
+    topic = module["topic"].get(lang, module["topic"]["EN"])
+    qnr = quiz_index(user.module, user.step)
+    quiz = ai.generate_quiz(topic, qnr, lang)
+
+    if not quiz:
+        # Fallback: ga door
+        return _advance(user, lang, db)
+
+    user.pending_quiz_text = quiz["text"]
+    user.pending_quiz_correct = quiz["correct"]
+    db.commit()
+    return quiz["text"]
 
 
 def _advance(user: User, lang: str, db: Session) -> str:
-    """Move to the next step/module and return the content of that step."""
-    current_module = user.module
-    current_step = user.step
+    """Ga naar de volgende stap/module en return de inhoud."""
+    max_steps = steps_in_module(user.module)
 
-    module_data = get_module(current_module)
-    max_steps = len(module_data["steps"]) if module_data else 0
-
-    if current_step < max_steps:
-        user.step = current_step + 1
+    if user.step < max_steps:
+        user.step += 1
     else:
-        # Move to next module
-        next_module = current_module + 1
+        next_module = user.module + 1
         if next_module > total_modules():
             user.state = "COMPLETED"
             db.commit()
-            # Return the final module_complete content (already shown, so just done msg)
-            step_data = get_step(current_module, current_step)
-            return step_data["content"][lang]
+            return ai.generate_module_complete(
+                get_module(user.module)["title"].get(lang, ""),
+                None,
+                lang,
+            )
         user.module = next_module
         user.step = 1
 
     db.commit()
+    return _generate_step_content(user, lang, db)
 
-    next_step = get_step(user.module, user.step)
-    if not next_step:
-        return "Something went wrong. Reply RESTART to start over."
 
-    return next_step["content"] if isinstance(next_step.get("content"), str) else (
-        next_step.get("content", {}).get(lang, "")
-        or next_step.get("question", {}).get(lang, "")
-    )
+def _generate_step_content(user: User, lang: str, db: Session) -> str:
+    """Genereer de inhoud voor de huidige stap."""
+    step_type = get_step_type(user.module, user.step)
+    module = get_module(user.module)
+    if not module:
+        return "Something went wrong. Reply RESTART."
+
+    topic = module["topic"].get(lang, module["topic"]["EN"])
+
+    if step_type == "lesson":
+        lnr = lesson_index(user.module, user.step)
+        return ai.generate_lesson(topic, lnr, lang)
+
+    if step_type == "quiz":
+        return _present_quiz(user, lang, db)
+
+    if step_type == "module_complete":
+        return _generate_module_complete_msg(user.module, lang)
+
+    return "Something went wrong. Reply RESTART."
+
+
+def _generate_module_complete_msg(module_id: int, lang: str) -> str:
+    module = get_module(module_id)
+    next_module = get_module(module_id + 1)
+    title = module["title"].get(lang, "") if module else ""
+    next_title = next_module["title"].get(lang, "") if next_module else None
+    return ai.generate_module_complete(title, next_title, lang)
+
+
+def _is_question(text: str) -> bool:
+    t = text.strip()
+    if t.endswith("?"):
+        return True
+    question_words = [
+        "what", "how", "why", "where", "when", "who",
+        "wat", "hoe", "waarom", "waar", "wanneer", "wie",
+        "was", "wo", "wann", "warum",
+        "que", "cómo", "dónde", "cuándo",
+        "quoi", "comment", "pourquoi", "où", "quand",
+    ]
+    first = t.lower().split()[0] if t else ""
+    return first in question_words
 
 
 def _t(lang: str, en: str, nl: str = "", de: str = "", fr: str = "", es: str = "") -> str:
-    mapping = {"EN": en, "NL": nl or en, "DE": de or en, "FR": fr or en, "ES": es or en}
-    return mapping.get(lang, en)
+    return {"EN": en, "NL": nl or en, "DE": de or en, "FR": fr or en, "ES": es or en}.get(lang, en)

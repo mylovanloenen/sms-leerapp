@@ -10,10 +10,11 @@ from sqlalchemy.orm import Session
 from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 
+from sqlalchemy import text
 from app.database import Base, engine, get_db
 from app.models import User
 from app.sms_logic import process_message
-from app.curriculum import CURRICULUM, LANGUAGES
+from app.curriculum import MODULES, LANGUAGES, total_steps, completed_steps
 
 load_dotenv()
 
@@ -45,6 +46,18 @@ def register_twilio_webhook():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
+    # Voeg nieuwe kolommen toe als ze nog niet bestaan (PostgreSQL)
+    try:
+        with engine.connect() as conn:
+            conn.execute(text(
+                "ALTER TABLE users ADD COLUMN IF NOT EXISTS pending_quiz_text TEXT"
+            ))
+            conn.execute(text(
+                "ALTER TABLE users ADD COLUMN IF NOT EXISTS pending_quiz_correct VARCHAR(1)"
+            ))
+            conn.commit()
+    except Exception:
+        pass
     register_twilio_webhook()
     yield
 
@@ -74,29 +87,20 @@ async def webhook(
 def dashboard(request: Request, db: Session = Depends(get_db)):
     users = db.query(User).order_by(User.last_active.desc()).all()
 
-    # Enrich with computed fields
     enriched = []
+    ts = total_steps()
     for u in users:
-        total_steps = sum(len(m["steps"]) for m in CURRICULUM)
-        completed_steps = sum(
-            len(m["steps"])
-            for m in CURRICULUM
-            if m["module"] < u.module
-        ) + (u.step - 1)
-        progress_pct = round((completed_steps / total_steps) * 100) if total_steps else 0
-
+        cs = completed_steps(u.module, u.step)
+        progress_pct = round((cs / ts) * 100) if ts else 0
         score_pct = (
             round((u.correct_answers / u.total_questions) * 100)
-            if u.total_questions
-            else None
+            if u.total_questions else None
         )
-
         current_module_title = ""
-        for m in CURRICULUM:
-            if m["module"] == u.module:
+        for m in MODULES:
+            if m["id"] == u.module:
                 current_module_title = m["title"].get(u.language or "EN", "")
                 break
-
         enriched.append({
             "phone": u.phone,
             "language": LANGUAGES.get(u.language, "?") if u.language else "?",
@@ -124,22 +128,21 @@ def user_detail(phone: str, request: Request, db: Session = Depends(get_db)):
     if not user:
         return HTMLResponse("<h1>User not found</h1>", status_code=404)
 
-    # Build step progress for all modules
     module_progress = []
-    for m in CURRICULUM:
+    for m in MODULES:
         steps = []
-        for s in m["steps"]:
-            if m["module"] < user.module:
+        for i, stype in enumerate(m["steps"], start=1):
+            if m["id"] < user.module:
                 status = "done"
-            elif m["module"] == user.module and s["step"] < user.step:
+            elif m["id"] == user.module and i < user.step:
                 status = "done"
-            elif m["module"] == user.module and s["step"] == user.step:
+            elif m["id"] == user.module and i == user.step:
                 status = "current"
             else:
                 status = "pending"
-            steps.append({"step": s["step"], "type": s["type"], "status": status})
+            steps.append({"step": i, "type": stype, "status": status})
         module_progress.append({
-            "module": m["module"],
+            "module": m["id"],
             "title": m["title"].get(user.language or "EN", ""),
             "steps": steps,
         })
