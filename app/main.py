@@ -1,5 +1,5 @@
 import os
-from datetime import timezone
+from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Form, Request
@@ -7,6 +7,7 @@ from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
+from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 
 from app.database import Base, engine, get_db
@@ -16,10 +17,39 @@ from app.curriculum import CURRICULUM, LANGUAGES
 
 load_dotenv()
 
-# Create tables on startup
-Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="SMS Leerapp")
+def register_twilio_webhook():
+    """Registreer de webhook URL automatisch bij Twilio."""
+    account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+    auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+    phone_number = os.getenv("TWILIO_PHONE_NUMBER")
+    app_url = os.getenv("RENDER_EXTERNAL_URL")
+
+    if not all([account_sid, auth_token, phone_number, app_url]):
+        print("⚠️  Twilio env vars niet compleet, webhook niet ingesteld.")
+        return
+
+    webhook_url = f"{app_url}/webhook"
+    try:
+        client = Client(account_sid, auth_token)
+        numbers = client.incoming_phone_numbers.list(phone_number=phone_number)
+        if not numbers:
+            print(f"⚠️  Telefoonnummer {phone_number} niet gevonden in Twilio.")
+            return
+        numbers[0].update(sms_url=webhook_url, sms_method="POST")
+        print(f"✅ Twilio webhook ingesteld op: {webhook_url}")
+    except Exception as e:
+        print(f"❌ Fout bij instellen Twilio webhook: {e}")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    register_twilio_webhook()
+    yield
+
+
+app = FastAPI(title="SMS Leerapp", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
