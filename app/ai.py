@@ -174,64 +174,71 @@ def generate_lesson(
     return f"{text}\n\n{hint}"
 
 
-# ── Quiz generatie ────────────────────────────────────────────────────────────
+# ── Check vraag (open, geen A/B/C) ───────────────────────────────────────────
 
-def generate_quiz(
+def generate_check_question(
     topic: str,
     quiz_nr: int,
     lang: str,
     name: str | None = None,
     skill: str | None = None,
-) -> dict | None:
-    hint = QUIZ_HINTS.get(lang, QUIZ_HINTS["EN"])
+) -> str | None:
+    """Genereer een open controlevraag over het lesonderwerp."""
+    lang_name = LANG_NAMES.get(lang, "English")
+
+    text = _call(
+        system=(
+            f"You ask a single short comprehension question to check if an elderly "
+            f"learner understood a phone lesson. Write ONLY in {lang_name}. "
+            f"Max 100 chars. Use simple words. No multiple choice. Just 1 question."
+            + (f" Learner: {name}." if name else "")
+            + (f" Skill level: {skill}." if skill else "")
+        ),
+        user=f"Ask question {quiz_nr} to check understanding of: {topic}",
+        max_tokens=60,
+    )
+    if not text:
+        return None
+    return f"🎯 {text}"
+
+
+def evaluate_answer(
+    question: str,
+    answer: str,
+    topic: str,
+    lang: str,
+    name: str | None = None,
+) -> dict:
+    """
+    Laat Claude het antwoord beoordelen.
+    Geeft terug: {"understood": bool, "feedback": str}
+    """
     lang_name = LANG_NAMES.get(lang, "English")
 
     raw = _call(
         system=(
-            f"Create a quiz for elderly phone learners. "
-            f"Write ONLY in {lang_name}. Short and practical."
+            f"You evaluate if an elderly learner understood a phone lesson. "
+            f"Write ONLY in {lang_name}. Max 100 chars. 1 emoji. Be warm and encouraging."
             + (f" Learner: {name}." if name else "")
         ),
         user=(
-            f"Quiz {quiz_nr} about: {topic}\n"
-            f"Exact format (nothing else):\n"
-            f"Q: [max 60 chars]\n"
-            f"A) [short option]\n"
-            f"B) [short option]\n"
-            f"C) [short option]\n"
-            f"CORRECT: [A/B/C]"
+            f"Lesson topic: {topic}\n"
+            f"Question asked: {question}\n"
+            f"Learner answered: \"{answer}\"\n\n"
+            f"Did they show basic understanding? "
+            f"Reply on line 1: YES or NO\n"
+            f"Reply on line 2: short warm feedback (max 100 chars, 1 emoji)"
         ),
-        max_tokens=120,
+        max_tokens=80,
     )
 
     if not raw:
-        return None
-    return _parse_quiz(raw, hint)
+        return {"understood": True, "feedback": "👍"}
 
-
-def _parse_quiz(raw: str, hint: str) -> dict | None:
     lines = [l.strip() for l in raw.strip().splitlines() if l.strip()]
-    q, a, b, c, correct = "", "", "", "", ""
-
-    for line in lines:
-        if line.startswith("Q:"):
-            q = line[2:].strip()
-        elif line.startswith("A)"):
-            a = line[2:].strip()
-        elif line.startswith("B)"):
-            b = line[2:].strip()
-        elif line.startswith("C)"):
-            c = line[2:].strip()
-        elif "CORRECT:" in line:
-            val = line.split("CORRECT:")[-1].strip().upper()
-            if val and val[0] in "ABC":
-                correct = val[0]
-
-    if not (q and a and b and c and correct in ("A", "B", "C")):
-        return None
-
-    text = f"🎯 {q}\n\nA) {a}\nB) {b}\nC) {c}\n\n{hint}"
-    return {"text": text, "correct": correct}
+    understood = lines[0].upper().startswith("YES") if lines else True
+    feedback = lines[1] if len(lines) > 1 else lines[0] if lines else "👍"
+    return {"understood": understood, "feedback": feedback}
 
 
 # ── Feedback ──────────────────────────────────────────────────────────────────

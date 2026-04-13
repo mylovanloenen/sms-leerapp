@@ -99,38 +99,27 @@ def process_message(phone: str, body: str, db: Session) -> str:
             _move_next(user, db)
             return content
 
-        # QUIZ: toon vraag of evalueer antwoord
+        # QUIZ: stel open vraag, evalueer vrij antwoord met AI
         if step_type == "quiz":
             if not user.pending_quiz_text:
-                return _present_quiz(user, lang, db)
+                return _present_check(user, lang, db)
 
-            answer = text.strip().upper()
-            if answer not in ("A", "B", "C"):
-                answer = ai.interpret_quiz_answer(text, user.pending_quiz_text, lang)
-
-            if not answer:
-                if _is_question(text):
-                    reply = _ai_question(user, text, lang)
-                    if reply:
-                        return reply
-                return _t(lang,
-                    "Please reply A, B or C.",
-                    "Antwoord A, B of C.",
-                    "Antworten Sie A, B oder C.",
-                    "Répondez A, B ou C.",
-                    "Responda A, B o C.")
-
-            correct = answer == user.pending_quiz_correct
-            feedback = ai.generate_feedback(
-                correct, answer, user.pending_quiz_correct or "?", lang, name=user.name
+            # Er is een openstaande vraag — evalueer het antwoord met Claude
+            topic = _lesson_topic_for_step(user, lang)
+            result = ai.evaluate_answer(
+                question=user.pending_quiz_text,
+                answer=text,
+                topic=topic,
+                lang=lang,
+                name=user.name,
             )
             user.total_questions += 1
-            if correct:
+            if result["understood"]:
                 user.correct_answers += 1
             user.pending_quiz_text = None
             user.pending_quiz_correct = None
             _move_next(user, db)
-            return feedback  # ← alleen feedback, geen volgende les erbij
+            return result["feedback"]
 
         # MODULE COMPLETE: wacht op JA
         if step_type == "module_complete":
@@ -201,26 +190,29 @@ def _gen_lesson(user: User, lang: str) -> str:
     return ai.generate_lesson(topic, lnr, lang, name=user.name, skill=user.skill_level)
 
 
-def _present_quiz(user: User, lang: str, db: Session) -> str:
-    """Genereer quizvraag, sla op en stuur."""
-    module = get_module(user.module)
-    if not module:
-        return "Something went wrong. Reply RESTART."
-    topic = module["topic"].get(lang, module["topic"]["EN"])
+def _lesson_topic_for_step(user: User, lang: str) -> str:
+    """Geeft het les-onderwerp dat bij de huidige quizstap hoort."""
+    lnr = quiz_index(user.module, user.step)
+    return get_lesson_topic(user.module, lnr, lang)
+
+
+def _present_check(user: User, lang: str, db: Session) -> str:
+    """Genereer een open controlevraag, sla op en stuur."""
+    topic = _lesson_topic_for_step(user, lang)
     qnr = quiz_index(user.module, user.step)
-    quiz = ai.generate_quiz(topic, qnr, lang, name=user.name, skill=user.skill_level)
-    if not quiz:
+    question = ai.generate_check_question(topic, qnr, lang, name=user.name, skill=user.skill_level)
+    if not question:
         _move_next(user, db)
         return _t(lang,
-            "Skipping quiz, let's continue!",
-            "Quiz overgeslagen, verder!",
-            "Quiz übersprungen, weiter!",
-            "Quiz sauté, continuons!",
-            "Quiz omitido, ¡continuamos!")
-    user.pending_quiz_text = quiz["text"]
-    user.pending_quiz_correct = quiz["correct"]
+            "Let's continue!",
+            "Verder!",
+            "Weiter!",
+            "Continuons!",
+            "¡Continuamos!")
+    user.pending_quiz_text = question
+    user.pending_quiz_correct = None
     db.commit()
-    return quiz["text"]
+    return question
 
 
 def _gen_module_complete(module_id: int, lang: str, name: str | None = None) -> str:
