@@ -70,7 +70,7 @@ async def lifespan(app: FastAPI):
         pass
     register_twilio_webhook()
 
-    hour = int(os.getenv("DAILY_LESSON_HOUR", "9"))
+    hour = int(os.getenv("DAILY_LESSON_HOUR", "12"))
     _scheduler.add_job(send_daily_lessons, "cron", hour=hour, minute=0, timezone="Europe/Amsterdam")
     _scheduler.start()
     print(f"⏰ Dagelijkse les gepland om {hour}:00 Amsterdam-tijd")
