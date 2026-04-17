@@ -52,18 +52,10 @@ def process_message(phone: str, body: str, db: Session) -> str:
 
     # ── TAAL KIEZEN ───────────────────────────────────────────────
     if user.state == "LANG_PENDING":
-        NUMBER_TO_LANG = {"1": "NL", "2": "EN", "3": "DE", "4": "FR", "5": "ES", "6": "NL", "7": "NL"}
-        raw = text.strip()
-        lang = NUMBER_TO_LANG.get(raw) or raw.upper()
-        if lang not in LANGUAGES:
-            lang = ai.detect_language_from_text(raw)
+        lang = ai.detect_language_from_text(text.strip())
         if lang in LANGUAGES:
             return _start(user, lang, db)
-        return (
-            "Niet herkend. Stuur een cijfer:\n"
-            "1-Nederlands 2-English 3-Deutsch\n"
-            "4-Français 5-Español 6-Türkçe 7-العربية"
-        )
+        return "Niet herkend 🤔 Typ je taal, bijv: Nederlands, English, Türkçe, العربية"
 
     # ── NAAM INVOEREN ─────────────────────────────────────────────
     if user.state == "NAME_PENDING":

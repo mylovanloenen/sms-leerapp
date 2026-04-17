@@ -18,15 +18,7 @@ LANGUAGES = {
 
 WELCOME_MESSAGE = (
     "Welkom bij DigiDoen! 👋\n"
-    "Kies jouw taal / Choose your language:\n\n"
-    "1 - Nederlands\n"
-    "2 - English\n"
-    "3 - Deutsch\n"
-    "4 - Français\n"
-    "5 - Español\n"
-    "6 - Türkçe\n"
-    "7 - العربية\n\n"
-    "Stuur het cijfer of de naam van je taal."
+    "Typ je taal / Type your language 🌍"
 )
 
 YES_WORDS = {
