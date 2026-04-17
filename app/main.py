@@ -1,6 +1,7 @@
 import os
 from contextlib import asynccontextmanager
 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, Response
@@ -15,8 +16,11 @@ from app.database import Base, engine, get_db
 from app.models import User
 from app.sms_logic import process_message
 from app.curriculum import MODULES, LANGUAGES, total_steps, completed_steps
+from app.scheduler import send_daily_lessons
 
 load_dotenv()
+
+_scheduler = AsyncIOScheduler()
 
 
 def register_twilio_webhook():
@@ -65,7 +69,15 @@ async def lifespan(app: FastAPI):
     except Exception:
         pass
     register_twilio_webhook()
+
+    hour = int(os.getenv("DAILY_LESSON_HOUR", "9"))
+    _scheduler.add_job(send_daily_lessons, "cron", hour=hour, minute=0, timezone="Europe/Amsterdam")
+    _scheduler.start()
+    print(f"⏰ Dagelijkse les gepland om {hour}:00 Amsterdam-tijd")
+
     yield
+
+    _scheduler.shutdown()
 
 
 app = FastAPI(title="SMS Leerapp", lifespan=lifespan)
