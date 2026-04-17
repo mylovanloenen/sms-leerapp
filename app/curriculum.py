@@ -1,141 +1,75 @@
+import json
+import os
+import re
+
+# ── JSON laden ────────────────────────────────────────────────────────────────
+_JSON_PATH = os.path.join(os.path.dirname(__file__), "digidoen_curriculum.json")
+with open(_JSON_PATH, encoding="utf-8") as _f:
+    _CURRICULUM = json.load(_f)["curriculum"]
+
+# ── Talen ─────────────────────────────────────────────────────────────────────
 LANGUAGES = {
+    "NL": "Nederlands",
     "EN": "English",
-    "NL": "Dutch",
-    "DE": "German",
-    "FR": "French",
-    "ES": "Spanish",
+    "DE": "Deutsch",
+    "FR": "Français",
+    "ES": "Español",
 }
 
 WELCOME_MESSAGE = (
-    "Welcome! 👋 What language?\n"
-    "Welke taal? / Quelle langue?\n"
-    "¿Idioma? / Welche Sprache?\n\n"
-    "Reply: EN / NL / DE / FR / ES"
+    "Welkom bij DigiDoen! 👋\n"
+    "Kies jouw taal / Choose your language:\n\n"
+    "1 - Nederlands\n"
+    "2 - English\n"
+    "3 - Deutsch\n"
+    "4 - Français\n"
+    "5 - Español\n"
+    "6 - Türkçe\n"
+    "7 - العربية\n\n"
+    "Stuur het cijfer of de naam van je taal."
 )
 
 YES_WORDS = {
+    "NL": ["JA", "J", "OK", "OKEY", "ZEKER", "VOLGENDE", "KLAAR", "GELUKT", "VERDER"],
     "EN": ["YES", "Y", "OK", "OKAY", "SURE", "NEXT"],
-    "NL": ["JA", "J", "OK", "OKEY", "ZEKER", "VOLGENDE"],
     "DE": ["JA", "J", "OK", "OKAY", "SICHER", "WEITER"],
     "FR": ["OUI", "O", "OK", "SUIVANT"],
     "ES": ["SÍ", "SI", "S", "OK", "CLARO"],
 }
 
-MODULES = [
-    {
-        "id": 1,
-        "title": {"EN": "SMS", "NL": "SMS", "DE": "SMS", "FR": "SMS", "ES": "SMS"},
-        "topic": {
-            "EN": "sending and reading SMS text messages on a smartphone",
-            "NL": "SMS-berichten sturen en lezen op een smartphone",
-            "DE": "SMS-Nachrichten auf einem Smartphone senden und lesen",
-            "FR": "envoyer et lire des SMS sur un smartphone",
-            "ES": "enviar y leer SMS en un smartphone",
-        },
-        "lessons": [
-            {
-                "EN": "opening the Messages app and reading a received SMS",
-                "NL": "de Berichten-app openen en een ontvangen SMS lezen",
-                "DE": "die Nachrichten-App öffnen und eine empfangene SMS lesen",
-                "FR": "ouvrir l'application Messages et lire un SMS reçu",
-                "ES": "abrir la aplicación Mensajes y leer un SMS recibido",
-            },
-            {
-                "EN": "typing and sending a new SMS to a contact",
-                "NL": "een nieuwe SMS typen en versturen naar een contact",
-                "DE": "eine neue SMS tippen und an einen Kontakt senden",
-                "FR": "taper et envoyer un nouveau SMS à un contact",
-                "ES": "escribir y enviar un nuevo SMS a un contacto",
-            },
-        ],
-        "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
-    },
-    {
-        "id": 2,
-        "title": {"EN": "Calling", "NL": "Bellen", "DE": "Telefonieren", "FR": "Appels", "ES": "Llamadas"},
-        "topic": {
-            "EN": "making phone calls and saving contacts on a smartphone",
-            "NL": "bellen en contacten opslaan op een smartphone",
-            "DE": "Telefonieren und Kontakte auf dem Smartphone speichern",
-            "FR": "passer des appels et enregistrer des contacts",
-            "ES": "hacer llamadas y guardar contactos en el teléfono",
-        },
-        "lessons": [
-            {
-                "EN": "making a phone call: opening the dial pad and calling a number",
-                "NL": "bellen: het toetsenbord openen en een nummer bellen",
-                "DE": "Anruf tätigen: die Wähltastatur öffnen und eine Nummer anrufen",
-                "FR": "passer un appel: ouvrir le clavier et appeler un numéro",
-                "ES": "hacer una llamada: abrir el teclado y marcar un número",
-            },
-            {
-                "EN": "saving a new contact with a name and phone number",
-                "NL": "een nieuw contact opslaan met naam en telefoonnummer",
-                "DE": "einen neuen Kontakt mit Name und Telefonnummer speichern",
-                "FR": "enregistrer un nouveau contact avec un nom et un numéro",
-                "ES": "guardar un nuevo contacto con nombre y número de teléfono",
-            },
-        ],
-        "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
-    },
-    {
-        "id": 3,
-        "title": {"EN": "WhatsApp", "NL": "WhatsApp", "DE": "WhatsApp", "FR": "WhatsApp", "ES": "WhatsApp"},
-        "topic": {
-            "EN": "using WhatsApp to send free messages, photos and make video calls",
-            "NL": "WhatsApp gebruiken voor gratis berichten, foto's en videobellen",
-            "DE": "WhatsApp für kostenlose Nachrichten, Fotos und Videoanrufe",
-            "FR": "utiliser WhatsApp pour messages gratuits, photos et appels vidéo",
-            "ES": "usar WhatsApp para mensajes gratis, fotos y videollamadas",
-        },
-        "lessons": [
-            {
-                "EN": "installing WhatsApp and sending a first free text message",
-                "NL": "WhatsApp installeren en een eerste gratis bericht sturen",
-                "DE": "WhatsApp installieren und eine erste kostenlose Nachricht senden",
-                "FR": "installer WhatsApp et envoyer un premier message gratuit",
-                "ES": "instalar WhatsApp y enviar un primer mensaje gratuito",
-            },
-            {
-                "EN": "sending a photo and making a video call via WhatsApp",
-                "NL": "een foto sturen en videobellen via WhatsApp",
-                "DE": "ein Foto senden und per WhatsApp videotelefonieren",
-                "FR": "envoyer une photo et passer un appel vidéo via WhatsApp",
-                "ES": "enviar una foto y hacer una videollamada por WhatsApp",
-            },
-        ],
-        "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
-    },
-    {
-        "id": 4,
-        "title": {"EN": "Email", "NL": "E-mail", "DE": "E-Mail", "FR": "Email", "ES": "Correo"},
-        "topic": {
-            "EN": "understanding and using email on a smartphone",
-            "NL": "e-mail begrijpen en gebruiken op een smartphone",
-            "DE": "E-Mail auf dem Smartphone verstehen und nutzen",
-            "FR": "comprendre et utiliser l'email sur un smartphone",
-            "ES": "entender y usar el correo electrónico en el teléfono",
-        },
-        "lessons": [
-            {
-                "EN": "opening the email app and reading a received email",
-                "NL": "de e-mailapp openen en een ontvangen e-mail lezen",
-                "DE": "die E-Mail-App öffnen und eine empfangene E-Mail lesen",
-                "FR": "ouvrir l'application email et lire un email reçu",
-                "ES": "abrir la aplicación de correo y leer un correo recibido",
-            },
-            {
-                "EN": "writing and sending a new email with subject and message",
-                "NL": "een nieuwe e-mail schrijven en versturen met onderwerp en bericht",
-                "DE": "eine neue E-Mail mit Betreff und Nachricht schreiben und senden",
-                "FR": "écrire et envoyer un nouvel email avec objet et message",
-                "ES": "escribir y enviar un nuevo correo con asunto y mensaje",
-            },
-        ],
-        "steps": ["lesson", "quiz", "lesson", "quiz", "module_complete"],
-    },
-]
+# ── Lessen index (id → dict) ───────────────────────────────────────────────────
+_LESSON_BY_ID: dict[str, dict] = {}
 
+# ── Modules opbouwen uit JSON ──────────────────────────────────────────────────
+MODULES: list[dict] = []
+
+for _i, _jm in enumerate(_CURRICULUM["modules"]):
+    _lesson_ids = []
+    _lesson_topics = []
+
+    for _les in _jm["lessen"]:
+        _LESSON_BY_ID[_les["id"]] = _les
+        _lesson_ids.append(_les["id"])
+        # Gebruik leerdoel als les-topic (voor AI-talen)
+        _topic = _les.get("leerdoel", _les["titel"])
+        _lesson_topics.append({lang: _topic for lang in LANGUAGES})
+
+    # Stappen: één per les + module_complete aan het eind
+    _steps = ["lesson"] * len(_lesson_ids) + ["module_complete"]
+    _title = _jm["titel"]
+
+    MODULES.append({
+        "id": _i + 1,
+        "json_id": _jm["id"],
+        "title": {lang: _title for lang in LANGUAGES},
+        "topic": {lang: _jm.get("beschrijving", _title) for lang in LANGUAGES},
+        "lessons": _lesson_topics,
+        "lesson_ids": _lesson_ids,
+        "steps": _steps,
+    })
+
+
+# ── Hulpfuncties ──────────────────────────────────────────────────────────────
 
 def get_module(module_id: int) -> dict | None:
     for m in MODULES:
@@ -154,16 +88,94 @@ def get_step_type(module_id: int, step_nr: int) -> str | None:
     return steps[step_nr - 1]
 
 
+def lesson_index(module_id: int, step_nr: int) -> int:
+    """Welk lesnummer is dit binnen de module (1-based)."""
+    module = get_module(module_id)
+    if not module:
+        return 1
+    count = sum(1 for s in module["steps"][:step_nr - 1] if s == "lesson")
+    return count + 1
+
+
+def quiz_index(module_id: int, step_nr: int) -> int:
+    """Welk quiznummer is dit binnen de module (1-based) — alias van lesson_index."""
+    return lesson_index(module_id, step_nr)
+
+
 def get_lesson_topic(module_id: int, lesson_nr: int, lang: str) -> str:
-    """Geeft het specifieke sub-onderwerp voor les lesson_nr (1-based)."""
+    """Geeft het onderwerp van les lesson_nr (1-based) in de gegeven taal."""
     module = get_module(module_id)
     if not module or "lessons" not in module:
-        return module["topic"].get(lang, module["topic"]["EN"]) if module else ""
+        return module["topic"].get(lang, "") if module else ""
     lessons = module["lessons"]
     idx = lesson_nr - 1
     if idx < 0 or idx >= len(lessons):
-        return module["topic"].get(lang, module["topic"]["EN"])
-    return lessons[idx].get(lang, lessons[idx]["EN"])
+        return module["topic"].get(lang, "")
+    return lessons[idx].get(lang, "")
+
+
+def get_lesson_id_for_step(module_id: int, step_nr: int) -> str | None:
+    """Geeft het JSON-les-ID voor een gegeven stap (alleen voor 'lesson' stappen)."""
+    module = get_module(module_id)
+    if not module or "lesson_ids" not in module:
+        return None
+    lnr = lesson_index(module_id, step_nr)  # 1-based
+    lesson_ids = module["lesson_ids"]
+    if 1 <= lnr <= len(lesson_ids):
+        return lesson_ids[lnr - 1]
+    return None
+
+
+def get_lesson_by_id(lesson_id: str) -> dict | None:
+    return _LESSON_BY_ID.get(lesson_id)
+
+
+def get_lesson_content(lesson_id: str) -> str | None:
+    """Geeft de kant-en-klare SMS-tekst voor deze les."""
+    les = _LESSON_BY_ID.get(lesson_id)
+    if not les:
+        return None
+    return les.get("bericht") or les.get("sms_bericht")
+
+
+def check_lesson_answer(lesson_id: str, text: str) -> tuple[bool, str]:
+    """
+    Vergelijkt het antwoord met verwacht_antwoord.
+    Geeft (correct, feedback) terug.
+    'correct' is True als antwoord herkend werd of voortgang_vereist=False.
+    """
+    les = _LESSON_BY_ID.get(lesson_id)
+    if not les:
+        return True, "Verder!"
+
+    answer = text.strip().lower()
+    expected = [e.lower() for e in les.get("verwacht_antwoord", [])]
+    voortgang_vereist = les.get("voortgang_vereist", True)
+
+    matched = not expected or answer in expected or any(e in answer for e in expected)
+
+    if matched or not voortgang_vereist:
+        feedback = _pick_good_feedback(les, answer)
+        return True, feedback
+    else:
+        fout = les.get("bij_fout_antwoord", "Probeer opnieuw.")
+        return False, fout
+
+
+def _pick_good_feedback(les: dict, answer: str) -> str:
+    """Kies het juiste positieve antwoord op basis van het gegeven woord."""
+    if "bij_goed_antwoord_ja" in les and ("ja" in answer or "klaar" in answer or "gelukt" in answer):
+        return les["bij_goed_antwoord_ja"]
+    if "bij_goed_antwoord_nee" in les and "nee" in answer:
+        return les["bij_goed_antwoord_nee"]
+    if "bij_goed_antwoord_bezig" in les and ("bezig" in answer or "wacht" in answer):
+        return les["bij_goed_antwoord_bezig"]
+    return les.get("bij_goed_antwoord", "Goed! Verder naar de volgende les.")
+
+
+def is_lesson_id(text: str) -> bool:
+    """Controleert of een string eruitziet als een JSON les-ID (bijv. M01L02)."""
+    return bool(re.match(r'^M\d{2}L\d{2,3}$', text.strip()))
 
 
 def total_modules() -> int:
@@ -190,23 +202,5 @@ def completed_steps(module_id: int, step_nr: int) -> int:
 
 
 def is_yes(text: str, language: str) -> bool:
-    words = YES_WORDS.get(language, YES_WORDS["EN"])
+    words = YES_WORDS.get(language, YES_WORDS["NL"])
     return text.strip().upper() in words
-
-
-def lesson_index(module_id: int, step_nr: int) -> int:
-    """Which lesson number is this within the module (1-based)."""
-    module = get_module(module_id)
-    if not module:
-        return 1
-    count = sum(1 for s in module["steps"][:step_nr - 1] if s == "lesson")
-    return count + 1
-
-
-def quiz_index(module_id: int, step_nr: int) -> int:
-    """Which quiz number is this within the module (1-based)."""
-    module = get_module(module_id)
-    if not module:
-        return 1
-    count = sum(1 for s in module["steps"][:step_nr - 1] if s == "quiz")
-    return count + 1

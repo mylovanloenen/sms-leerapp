@@ -2,8 +2,8 @@
 State machine: één bericht per interactie, nooit combineren.
 
 Flow per stap:
-  lesson       → toon les, zet stap vooruit
-  quiz         → toon vraag / evalueer antwoord, zet stap vooruit na antwoord
+  lesson (NL)  → stuur kant-en-klare les, wacht op antwoord, geef feedback
+  lesson (overig) → AI-gegenereerde les, stap meteen vooruit
   module_complete → toon afronding, wacht op JA, zet dan module vooruit
 """
 from datetime import datetime, timezone
@@ -14,6 +14,8 @@ from app.curriculum import (
     LANGUAGES, WELCOME_MESSAGE, get_module, get_step_type,
     total_modules, steps_in_module, is_yes,
     lesson_index, quiz_index, get_lesson_topic,
+    get_lesson_id_for_step, get_lesson_content,
+    check_lesson_answer, is_lesson_id,
 )
 from app import ai
 
@@ -50,16 +52,22 @@ def process_message(phone: str, body: str, db: Session) -> str:
 
     # ── TAAL KIEZEN ───────────────────────────────────────────────
     if user.state == "LANG_PENDING":
-        lang = text.strip().upper()
+        NUMBER_TO_LANG = {"1": "NL", "2": "EN", "3": "DE", "4": "FR", "5": "ES", "6": "NL", "7": "NL"}
+        raw = text.strip()
+        lang = NUMBER_TO_LANG.get(raw) or raw.upper()
         if lang not in LANGUAGES:
-            lang = ai.detect_language_from_text(text)
+            lang = ai.detect_language_from_text(raw)
         if lang in LANGUAGES:
             return _start(user, lang, db)
-        return "Reply: EN / NL / DE / FR / ES"
+        return (
+            "Niet herkend. Stuur een cijfer:\n"
+            "1-Nederlands 2-English 3-Deutsch\n"
+            "4-Français 5-Español 6-Türkçe 7-العربية"
+        )
 
     # ── NAAM INVOEREN ─────────────────────────────────────────────
     if user.state == "NAME_PENDING":
-        lang = user.language or "EN"
+        lang = user.language or "NL"
         name = text.strip()
         if not name:
             return ai.ask_name(lang)
@@ -70,12 +78,13 @@ def process_message(phone: str, body: str, db: Session) -> str:
 
     # ── VAARDIGHEDEN INVOEREN ──────────────────────────────────────
     if user.state == "SKILL_PENDING":
-        lang = user.language or "EN"
+        lang = user.language or "NL"
         skill_text = text.strip()
         if not skill_text:
             return ai.ask_skills(lang, user.name or "")
         user.skill_level = skill_text
-        starting_module = ai.assess_starting_module(skill_text, lang)
+        # Voor NL altijd starten bij module 1 (vaste volgorde)
+        starting_module = 1 if lang == "NL" else ai.assess_starting_module(skill_text, lang)
         user.module = starting_module
         user.step = 1
         user.state = "LEARNING"
@@ -86,42 +95,24 @@ def process_message(phone: str, body: str, db: Session) -> str:
 
     # ── AAN HET LEREN ─────────────────────────────────────────────
     if user.state == "LEARNING":
-        lang = user.language or "EN"
+        lang = user.language or "NL"
         step_type = get_step_type(user.module, user.step)
 
-        # LESSON: toon les voor huidige stap, zet daarna vooruit
+        # LESSON ──────────────────────────────────────────────────
         if step_type == "lesson":
-            if _is_question(text):
-                reply = _ai_question(user, text, lang)
-                if reply:
-                    return reply
-            content = _gen_lesson(user, lang)
-            _move_next(user, db)
-            return content
+            if lang == "NL":
+                return _handle_nl_lesson(user, text, db)
+            else:
+                # Niet-NL: AI-gegenereerde les, meteen verder
+                if _is_question(text):
+                    reply = _ai_question(user, text, lang)
+                    if reply:
+                        return reply
+                content = _gen_lesson(user, lang)
+                _move_next(user, db)
+                return content
 
-        # QUIZ: stel open vraag, evalueer vrij antwoord met AI
-        if step_type == "quiz":
-            if not user.pending_quiz_text:
-                return _present_check(user, lang, db)
-
-            # Er is een openstaande vraag — evalueer het antwoord met Claude
-            topic = _lesson_topic_for_step(user, lang)
-            result = ai.evaluate_answer(
-                question=user.pending_quiz_text,
-                answer=text,
-                topic=topic,
-                lang=lang,
-                name=user.name,
-            )
-            user.total_questions += 1
-            if result["understood"]:
-                user.correct_answers += 1
-            user.pending_quiz_text = None
-            user.pending_quiz_correct = None
-            _move_next(user, db)
-            return result["feedback"]
-
-        # MODULE COMPLETE: wacht op JA
+        # MODULE COMPLETE: wacht op JA ────────────────────────────
         if step_type == "module_complete":
             if not is_yes(text, lang):
                 if _is_question(text):
@@ -130,35 +121,79 @@ def process_message(phone: str, body: str, db: Session) -> str:
                         return reply
                 return _gen_module_complete(user.module, lang, name=user.name)
 
-            # Gebruiker zegt JA → volgende module
             current_title = _module_title(user.module, lang)
             _move_next(user, db)
 
             if user.state == "COMPLETED":
                 return ai.generate_module_complete(current_title, None, lang, name=user.name)
 
-            # Toon eerste les van nieuwe module, zet stap vooruit
-            content = _gen_lesson(user, lang)
-            _move_next(user, db)
-            return content
+            # Stuur eerste les van nieuwe module
+            if lang == "NL":
+                return _handle_nl_lesson(user, text, db)
+            else:
+                content = _gen_lesson(user, lang)
+                _move_next(user, db)
+                return content
 
     # ── KLAAR ─────────────────────────────────────────────────────
     if user.state == "COMPLETED":
-        lang = user.language or "EN"
+        lang = user.language or "NL"
         return _t(lang,
             "All done! 🌟 Reply RESTART to start over.",
-            "Alles klaar! 🌟 Antwoord OPNIEUW om opnieuw te beginnen.",
+            "Alles klaar! 🌟 Stuur OPNIEUW om opnieuw te beginnen.",
             "Fertig! 🌟 Antworten Sie NEU.",
             "Terminé! 🌟 Répondez RECOMMENCER.",
             "¡Listo! 🌟 Responda REINICIAR.")
 
-    return "Something went wrong. Reply RESTART."
+    return "Er ging iets mis. Stuur OPNIEUW om te herstarten."
+
+
+# ── NL les-afhandeling ────────────────────────────────────────────────────────
+
+def _handle_nl_lesson(user: User, text: str, db: Session) -> str:
+    """
+    Interactieve lesflow voor NL:
+    - Geen pending → stuur les, sla lesson_id op
+    - Pending → evalueer antwoord, geef feedback, zet stap vooruit
+    """
+    # Wachten op antwoord op een eerder gestuurde les?
+    if user.pending_quiz_text and is_lesson_id(user.pending_quiz_text):
+        lesson_id = user.pending_quiz_text
+        correct, feedback = check_lesson_answer(lesson_id, text)
+
+        if correct:
+            user.pending_quiz_text = None
+            user.pending_quiz_correct = None
+            user.total_questions += 1
+            user.correct_answers += 1
+            _move_next(user, db)
+            return feedback
+        else:
+            # Fout antwoord, voortgang_vereist=True → herhaal feedback, blijf bij stap
+            user.total_questions += 1
+            db.commit()
+            return feedback
+
+    # Geen pending → stuur les
+    lesson_id = get_lesson_id_for_step(user.module, user.step)
+    if not lesson_id:
+        _move_next(user, db)
+        return "Verder naar de volgende stap!"
+
+    content = get_lesson_content(lesson_id)
+    if not content:
+        _move_next(user, db)
+        return "Verder!"
+
+    user.pending_quiz_text = lesson_id
+    user.pending_quiz_correct = None
+    db.commit()
+    return content
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _start(user: User, lang: str, db: Session) -> str:
-    """Taal ingesteld → vraag naar naam."""
     user.language = lang
     user.state = "NAME_PENDING"
     db.commit()
@@ -166,7 +201,6 @@ def _start(user: User, lang: str, db: Session) -> str:
 
 
 def _move_next(user: User, db: Session) -> None:
-    """Zet stap (of module) één vooruit. Genereert geen content."""
     max_steps = steps_in_module(user.module)
     if user.step < max_steps:
         user.step += 1
@@ -181,38 +215,17 @@ def _move_next(user: User, db: Session) -> None:
 
 
 def _gen_lesson(user: User, lang: str) -> str:
-    """Genereer les voor de huidige stap."""
     module = get_module(user.module)
     if not module:
-        return "Something went wrong. Reply RESTART."
+        return "Er ging iets mis. Stuur OPNIEUW."
     lnr = lesson_index(user.module, user.step)
     topic = get_lesson_topic(user.module, lnr, lang)
     return ai.generate_lesson(topic, lnr, lang, name=user.name, skill=user.skill_level)
 
 
 def _lesson_topic_for_step(user: User, lang: str) -> str:
-    """Geeft het les-onderwerp dat bij de huidige quizstap hoort."""
     lnr = quiz_index(user.module, user.step)
     return get_lesson_topic(user.module, lnr, lang)
-
-
-def _present_check(user: User, lang: str, db: Session) -> str:
-    """Genereer een open controlevraag, sla op en stuur."""
-    topic = _lesson_topic_for_step(user, lang)
-    qnr = quiz_index(user.module, user.step)
-    question = ai.generate_check_question(topic, qnr, lang, name=user.name, skill=user.skill_level)
-    if not question:
-        _move_next(user, db)
-        return _t(lang,
-            "Let's continue!",
-            "Verder!",
-            "Weiter!",
-            "Continuons!",
-            "¡Continuamos!")
-    user.pending_quiz_text = question
-    user.pending_quiz_correct = None
-    db.commit()
-    return question
 
 
 def _gen_module_complete(module_id: int, lang: str, name: str | None = None) -> str:
