@@ -1,0 +1,1000 @@
+{
+  "curriculum": {
+    "naam": "DigiDoen Basiscursus",
+    "versie": "2.0",
+    "beschrijving": "Volledig leertraject van nul digitale vaardigheden naar digitaal vaardig voor de overheid. Inclusief begeleide kanaalovergangen SMS naar WhatsApp naar e-mail en app-installatie.",
+    "doelniveau": "Zelfstandig gebruik van DigiD, MijnOverheid, toeslagen en gemeentelijke digitale diensten",
+    "talen": ["nl", "ar", "tr", "ti", "so"],
+    "kanalen": ["sms", "whatsapp", "email"],
+    "totaal_lessen": 75,
+    "modules": [
+
+      {
+        "id": "M01",
+        "titel": "Jouw telefoon",
+        "beschrijving": "Absolute nulstart. Hoe werkt een mobiele telefoon?",
+        "kanaal": "sms",
+        "niveau": "nul",
+        "volgorde": 1,
+        "lessen": [
+          {
+            "id": "M01L01",
+            "dag": 1,
+            "titel": "Welkom bij DigiDoen",
+            "leerdoel": "De gebruiker weet wat DigiDoen is en wat ze gaan leren",
+            "sms_bericht": "Welkom bij DigiDoen! Elke dag krijg je een klein berichtje. Je leert stap voor stap hoe je je telefoon gebruikt. Dit duurt 5 minuten per dag. Klaar om te beginnen? Stuur: JA",
+            "verwacht_antwoord": ["ja", "ja!", "ok", "oke", "goed", "1"],
+            "bij_goed_antwoord": "Super! We beginnen morgen met les 1. Tot morgen!",
+            "bij_fout_antwoord": "Geen probleem. Stuur JA als je klaar bent om te beginnen.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M01L02",
+            "dag": 2,
+            "titel": "Je telefoon aan en uit",
+            "leerdoel": "De gebruiker weet hoe ze de telefoon aan en uitzet en het scherm ontgrendelt",
+            "sms_bericht": "Les 1: Je telefoon. De knop aan de zijkant zet je telefoon aan. Druk lang om aan te zetten. Druk kort om het scherm wakker te maken. Daarna veeg je het scherm omhoog om te openen. Probeer het nu. Stuur: KLAAR als het lukt.",
+            "verwacht_antwoord": ["klaar", "gelukt", "ok", "ja", "1"],
+            "bij_goed_antwoord": "Geweldig! Je hebt je eerste stap gezet. Morgen leer je hoe je dit bericht terugvindt.",
+            "bij_fout_antwoord": "Niet gelukt? Vraag iemand naast je om te helpen, of stuur HULP.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M01L03",
+            "dag": 3,
+            "titel": "Berichten lezen",
+            "leerdoel": "De gebruiker kan SMS-berichten terugvinden en lezen",
+            "sms_bericht": "Les 2: Berichten lezen. Dit bericht is een sms. Sms-berichten staan in de app Berichten. Die app ziet er uit als een tekstballon. Zie jij de app Berichten op je scherm? Stuur: JA of NEE",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Top! In die app staan al onze lessen. Morgen leer je typen.",
+            "bij_goed_antwoord_nee": "Geen zorgen. Zoek naar een icoontje met een tekstballon of envelop. Stuur GEVONDEN als je het ziet.",
+            "bij_fout_antwoord": "Stuur JA als je de app ziet, of NEE als niet.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M01L04",
+            "dag": 4,
+            "titel": "Typen op je telefoon",
+            "leerdoel": "De gebruiker kan tekst typen en verzenden via SMS",
+            "sms_bericht": "Les 3: Typen. Om te antwoorden tik je op het witte vlak onderaan. Dan verschijnt het toetsenbord. Typ de letters een voor een. Druk op het pijltje rechts om te verzenden. Oefening: typ je naam en stuur het op.",
+            "verwacht_antwoord": ["*"],
+            "bij_goed_antwoord": "Goed gedaan! Je kunt nu typen en berichten sturen. Morgen leer je nummers typen.",
+            "bij_fout_antwoord": "Probeer het nog een keer. Tik op het witte vlak onderaan het scherm.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M01L05",
+            "dag": 5,
+            "titel": "Nummers en tekens",
+            "leerdoel": "De gebruiker kan nummers en speciale tekens typen",
+            "sms_bericht": "Les 4: Nummers typen. Op je toetsenbord zie je letters. Om cijfers te typen, druk je op 123 linksonder. Dan zie je cijfers. Druk op ABC om terug te gaan naar letters. Oefening: stuur het getal 5.",
+            "verwacht_antwoord": ["5"],
+            "bij_goed_antwoord": "Super! Je kunt nu letters en cijfers typen. Dit heb je nodig voor DigiD en inloggen. Morgen: vragen beantwoorden.",
+            "bij_fout_antwoord": "Probeer het nog een keer. Druk op 123 op het toetsenbord.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M01L06",
+            "dag": 6,
+            "titel": "Vragen beantwoorden",
+            "leerdoel": "De gebruiker begrijpt hoe lessen werken en kan meerkeuzevragen beantwoorden",
+            "sms_bericht": "Les 5: Hoe werken de lessen? Elke les eindigt met een vraag. Je kiest een antwoord en stuurt het op. Vraag: Waar staan jouw sms-berichten? 1. In de app Berichten 2. In de camera 3. Weet ik niet. Stuur 1, 2 of 3.",
+            "verwacht_antwoord": ["1"],
+            "bij_goed_antwoord": "Juist! Je leert snel. Morgen beginnen we met internet.",
+            "bij_fout_antwoord": "Het goede antwoord is 1. Je sms-berichten staan in de app Berichten.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M02",
+        "titel": "Internet en zoeken",
+        "beschrijving": "Wat is internet, hoe open je een browser, hoe zoek je informatie",
+        "kanaal": "sms",
+        "niveau": "basis",
+        "volgorde": 2,
+        "lessen": [
+          {
+            "id": "M02L01",
+            "dag": 7,
+            "titel": "Wat is internet?",
+            "leerdoel": "De gebruiker begrijpt wat internet is en waarvoor je het gebruikt",
+            "sms_bericht": "Les 6: Wat is internet? Internet is een netwerk van computers over de hele wereld. Via internet kun je informatie opzoeken, mailtjes sturen en dingen regelen. Je telefoon gebruikt internet via wifi of mobiele data. Heb jij wifi thuis? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! Met wifi kun je gratis internet gebruiken. Morgen leer je hoe je de internetbrowser opent.",
+            "bij_goed_antwoord_nee": "Geen wifi? Geen probleem. Je telefoon kan ook internet via het mobiele netwerk. Morgen meer.",
+            "bij_fout_antwoord": "Stuur JA als je wifi hebt thuis, of NEE als niet.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M02L02",
+            "dag": 8,
+            "titel": "De browser openen",
+            "leerdoel": "De gebruiker kan een internetbrowser openen op de telefoon",
+            "sms_bericht": "Les 7: De browser. Een browser is een app waarmee je internet gebruikt. Bekende browsers: Chrome (rond gekleurde cirkel), Safari (kompas), Firefox (vos). Zoek deze app op je telefoon. Gevonden? Stuur de naam: CHROME, SAFARI of FIREFOX.",
+            "verwacht_antwoord": ["chrome", "safari", "firefox", "browser", "internet", "gevonden"],
+            "bij_goed_antwoord": "Goed! Die app gebruik je voor internet. Morgen leer je hoe je iets zoekt.",
+            "bij_fout_antwoord": "Niet gevonden? Zoek een app met een rond gekleurde cirkel of een kompas. Stuur HULP als je vastloopt.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M02L03",
+            "dag": 9,
+            "titel": "Iets opzoeken",
+            "leerdoel": "De gebruiker kan een zoekopdracht uitvoeren via de browser",
+            "sms_bericht": "Les 8: Zoeken op internet. Open je browser. Bovenaan zie je een lang wit vlak. Dat is de adresbalk. Tik erop en typ: weer amsterdam. Druk op zoeken. Wat is het weer morgen in Amsterdam? Stuur het antwoord.",
+            "verwacht_antwoord": ["*"],
+            "bij_goed_antwoord": "Super! Je hebt voor het eerst iets opgezocht op internet. Morgen: een website openen.",
+            "bij_fout_antwoord": "Lukt het niet? Open je browser. Tik op het witte vlak bovenaan. Typ: weer amsterdam.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M02L04",
+            "dag": 10,
+            "titel": "Een website bezoeken",
+            "leerdoel": "De gebruiker kan een webadres intypen en een specifieke website openen",
+            "sms_bericht": "Les 9: Een website. Elke website heeft een adres. Dat begint met www. Probeer: open je browser. Tik in de adresbalk: www.amsterdam.nl. Druk op enter. Zie je de website van Amsterdam? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Geweldig! Je kunt nu websites bezoeken. Morgen: scrollen.",
+            "bij_goed_antwoord_nee": "Probeer het nog een keer. Tik het adres precies zo in: www.amsterdam.nl. Geen spaties.",
+            "bij_fout_antwoord": "Stuur JA als de website opende, of NEE als niet.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M02L05",
+            "dag": 11,
+            "titel": "Scrollen en navigeren",
+            "leerdoel": "De gebruiker kan scrollen en knoppen aantikken op een webpagina",
+            "sms_bericht": "Les 10: Scrollen en klikken. Op een website veeg je omhoog om verder te lezen. Woorden die blauw of onderstreept zijn, zijn links. Tik erop om naar een nieuwe pagina te gaan. Probeer dit op amsterdam.nl. Gelukt? Stuur KLAAR.",
+            "verwacht_antwoord": ["klaar", "ja", "gelukt", "ok"],
+            "bij_goed_antwoord": "Goed! Je kunt nu navigeren op websites. Morgen: apps installeren op je telefoon.",
+            "bij_fout_antwoord": "Probeer het nog een keer. Veeg met je vinger omhoog op het scherm.",
+            "voortgang_vereist": true
+          }
+        ]
+      },
+
+      {
+        "id": "M03",
+        "titel": "Apps installeren",
+        "beschrijving": "Wat zijn apps, hoe vind je de app store, hoe installeer je een app, hoe gebruik je WhatsApp",
+        "kanaal": "sms",
+        "niveau": "basis",
+        "volgorde": 3,
+        "lessen": [
+          {
+            "id": "M03L01",
+            "dag": 12,
+            "titel": "Wat zijn apps?",
+            "leerdoel": "De gebruiker begrijpt wat apps zijn en hoe ze werken",
+            "sms_bericht": "Les 11: Wat zijn apps? Een app is een programma op je telefoon. Elke app doet iets anders. WhatsApp: berichten sturen. Maps: de weg vinden. Buienradar: regen zien aankomen. Apps kun je gratis downloaden. Hoeveel apps heb jij op je telefoon? Stuur een getal.",
+            "verwacht_antwoord": ["*"],
+            "bij_goed_antwoord": "Goed! Morgen leer je hoe je nieuwe apps installeert.",
+            "bij_fout_antwoord": "Kijk op je scherm. Tel de icoontjes. Stuur het getal.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M03L02",
+            "dag": 13,
+            "titel": "De app store vinden",
+            "leerdoel": "De gebruiker kan de app store openen op Android of iPhone",
+            "sms_bericht": "Les 12: De app store. Apps download je via de app store. Op Android: de Play Store (driehoekje). Op iPhone: de App Store (blauwe A). Zoek dit icoontje op jouw telefoon. Welk icoontje zie jij? Stuur: PLAY of APPSTORE of WEET NIET.",
+            "verwacht_antwoord": ["play", "appstore", "app store", "weet niet", "play store"],
+            "bij_goed_antwoord_play": "Goed! Jij hebt een Android telefoon met de Play Store. Morgen leer je hoe je een app installeert via de Play Store.",
+            "bij_goed_antwoord_appstore": "Goed! Jij hebt een iPhone met de App Store. Morgen leer je hoe je een app installeert via de App Store.",
+            "bij_goed_antwoord_weet_niet": "Geen zorgen. We gaan het samen uitzoeken. Stuur HULP dan helpen we je.",
+            "bij_fout_antwoord": "Stuur PLAY als je een Play Store icoontje ziet, of APPSTORE als je een blauwe A ziet.",
+            "voortgang_vereist": true,
+            "notitie": "Het systeem onthoudt of gebruiker Android of iPhone heeft voor verdere begeleiding"
+          },
+          {
+            "id": "M03L03",
+            "dag": 14,
+            "titel": "Een app zoeken in de store",
+            "leerdoel": "De gebruiker kan een app opzoeken in de app store",
+            "sms_bericht": "Les 13: App zoeken. Open de app store op je telefoon. Je ziet bovenaan een zoekbalk. Tik erop en typ: WhatsApp. Je ziet WhatsApp verschijnen. Het icoontje is groen met een telefoon erin. Zie je het? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Top! Je hebt WhatsApp gevonden. Morgen leer je hoe je het installeert.",
+            "bij_goed_antwoord_nee": "Probeer het opnieuw. Open de app store. Zoek naar het zoekicoon. Typ: WhatsApp. Stuur HULP als je het niet vindt.",
+            "bij_fout_antwoord": "Stuur JA als je WhatsApp ziet in de zoekresultaten, NEE als niet.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M03L04",
+            "dag": 15,
+            "titel": "Een app installeren",
+            "leerdoel": "De gebruiker kan een app installeren via de app store",
+            "sms_bericht": "Les 14: App installeren. Je hebt WhatsApp gevonden in de store. Nu installeren. Tik op de groene knop waar staat: Installeren of Download of een wolk met een pijltje. Even wachten. De app wordt gedownload. Is het klaar? Stuur KLAAR of HULP.",
+            "verwacht_antwoord": ["klaar", "gelukt", "ja", "hulp"],
+            "bij_goed_antwoord": "Geweldig! WhatsApp staat nu op je telefoon. Morgen: WhatsApp instellen.",
+            "bij_fout_antwoord": "Niet gelukt? Je hebt soms een account nodig voor de app store. Stuur HULP dan gaan we stap voor stap.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M03L05",
+            "dag": 16,
+            "titel": "App store account",
+            "leerdoel": "De gebruiker begrijpt dat je een account nodig hebt voor de app store en kan dit aanmaken",
+            "sms_bericht": "Les 15: App store account. Soms heb je een account nodig om apps te downloaden. Op Android: een Google-account. Op iPhone: een Apple ID. Heb jij al een account? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! Dan kun je direct apps downloaden. Morgen: WhatsApp instellen.",
+            "bij_goed_antwoord_nee": "Dan gaan we er een aanmaken. Voor Android: ga naar accounts.google.com. Maak een gratis Google-account aan met je e-mailadres. Stuur KLAAR als je er een hebt.",
+            "bij_fout_antwoord": "Stuur JA of NEE.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M03L06",
+            "dag": 17,
+            "titel": "App verwijderen en updaten",
+            "leerdoel": "De gebruiker weet hoe ze een app verwijdert en bijwerkt",
+            "sms_bericht": "Les 16: Apps beheren. Apps bijwerken heet updaten. Ga naar de app store. Zoek naar Updates. Tik op Alles bijwerken. Apps verwijderen: houd je vinger op het icoontje. Tik op Verwijderen of het kruisje. Probeer een app bij te werken. Gelukt? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Goed! Je kunt nu apps installeren, updaten en verwijderen. Morgen: WhatsApp instellen voor onze lessen.",
+            "bij_fout_antwoord": "Geen zorgen. Updates zijn niet urgent. Morgen gaan we verder met WhatsApp instellen.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M04",
+        "titel": "Overgang naar WhatsApp",
+        "beschrijving": "Volledig begeleide overgang van SMS-lessen naar WhatsApp. Stap voor stap WhatsApp instellen en de eerste WhatsApp-berichten sturen.",
+        "kanaal": "sms",
+        "niveau": "basis",
+        "volgorde": 4,
+        "kanaal_overgang": {
+          "van": "sms",
+          "naar": "whatsapp",
+          "voorwaarden": ["WhatsApp geinstalleerd", "telefoonnummer geverifieerd"],
+          "terugvaloptie": true
+        },
+        "lessen": [
+          {
+            "id": "M04L01",
+            "dag": 18,
+            "titel": "WhatsApp openen",
+            "leerdoel": "De gebruiker kan WhatsApp openen en het groene icoontje vinden op het scherm",
+            "sms_bericht": "Les 17: WhatsApp openen. Zoek het groene icoontje met een witte telefoon op je scherm. Tik erop om WhatsApp te openen. Zie je WhatsApp? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! Morgen gaan we WhatsApp instellen met jouw telefoonnummer.",
+            "bij_goed_antwoord_nee": "WhatsApp staat misschien niet op je beginscherm. Veeg omhoog om alle apps te zien. Zoek het groene icoontje. Stuur HULP als je het niet vindt.",
+            "bij_fout_antwoord": "Stuur JA als je WhatsApp ziet, NEE als niet.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M04L02",
+            "dag": 19,
+            "titel": "WhatsApp instellen stap 1",
+            "leerdoel": "De gebruiker kan WhatsApp instellen met het eigen telefoonnummer",
+            "sms_bericht": "Les 18: WhatsApp instellen stap 1. Open WhatsApp. Kies je land: Nederland. Vul je telefoonnummer in. Dat is het nummer waarop je deze sms ontvangt. Klik op Volgende. WhatsApp stuurt je een code via sms. Zie je de Volgende knop? Stuur JA.",
+            "verwacht_antwoord": ["ja", "gelukt"],
+            "bij_goed_antwoord": "Goed! Even wachten op de sms-code. Zodra die binnenkomt: morgen door naar stap 2.",
+            "bij_fout_antwoord": "Open WhatsApp opnieuw. Je ziet een scherm met je land en telefoonnummer. Stuur HULP als je vastloopt.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M04L03",
+            "dag": 20,
+            "titel": "WhatsApp instellen stap 2",
+            "leerdoel": "De gebruiker kan de verificatiecode invoeren om WhatsApp te activeren",
+            "sms_bericht": "Les 19: WhatsApp stap 2. Je hebt een sms ontvangen met een 6-cijferige code. Open die sms. Typ de code in WhatsApp. WhatsApp wordt dan geactiveerd. Lukt het? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Geweldig! WhatsApp is nu actief op je telefoon. Morgen: je naam instellen.",
+            "bij_fout_antwoord": "De code staat in een sms van WhatsApp. Zoek in je Berichten-app naar een sms van WhatsApp. Stuur HULP als je hem niet vindt.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M04L04",
+            "dag": 21,
+            "titel": "WhatsApp instellen stap 3",
+            "leerdoel": "De gebruiker kan een naam en profielfoto instellen in WhatsApp",
+            "sms_bericht": "Les 20: WhatsApp stap 3. Voer je naam in. Je kunt ook een foto van jezelf toevoegen maar dat is niet verplicht. Tik op Volgende of Gereed. WhatsApp is nu klaar. Heb je je naam ingevoerd? Stuur JA.",
+            "verwacht_antwoord": ["ja", "klaar", "gedaan"],
+            "bij_goed_antwoord": "Goed! WhatsApp is ingesteld. Nu gaan we onze lessen via WhatsApp sturen. Dat heeft voordelen: je kunt foto's en links ontvangen. Morgen: jouw eerste WhatsApp-les.",
+            "bij_fout_antwoord": "Stuur JA als je naam is ingevoerd.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M04L05",
+            "dag": 22,
+            "titel": "DigiDoen toevoegen als WhatsApp-contact",
+            "leerdoel": "De gebruiker kan een nieuw contact toevoegen in WhatsApp en een bericht sturen",
+            "sms_bericht": "Les 21: Contact toevoegen. Om via WhatsApp lessen te ontvangen moet je ons nummer opslaan. Ons DigiDoen-nummer is: [DIGIDOEN_WHATSAPP_NUMMER]. Sla dit op als contact met de naam DigiDoen. Daarna stuur je via WhatsApp het woord: KLAAR. Probeer het.",
+            "verwacht_antwoord": ["klaar"],
+            "kanaal_verificatie": "whatsapp",
+            "bij_goed_antwoord": "Je WhatsApp-bericht is ontvangen! Vanaf nu krijg je lessen via WhatsApp. De overstap is gelukt. Tot morgen via WhatsApp!",
+            "bij_fout_antwoord": "Niet gelukt? Open WhatsApp. Tik op het potloodje of het plusje rechtsonder. Zoek naar Nieuw gesprek. Typ het DigiDoen-nummer. Stuur dan KLAAR.",
+            "voortgang_vereist": true,
+            "overgang_trigger": true,
+            "notitie": "Na succesvolle verificatie van het WhatsApp-bericht schakelt het systeem de gebruiker over naar het WhatsApp-kanaal"
+          }
+        ]
+      },
+
+      {
+        "id": "M05",
+        "titel": "Veilig online",
+        "beschrijving": "Wachtwoorden, phishing herkennen, veilig omgaan met persoonlijke gegevens",
+        "kanaal": "whatsapp",
+        "niveau": "basis",
+        "volgorde": 5,
+        "lessen": [
+          {
+            "id": "M05L01",
+            "dag": 23,
+            "titel": "Wat is een wachtwoord?",
+            "leerdoel": "De gebruiker begrijpt wat een wachtwoord is en waarom het belangrijk is",
+            "bericht": "Les 22: Wachtwoorden 🔒 Om in te loggen heb je een wachtwoord nodig. Een wachtwoord is geheim. Niemand anders mag het weten. Niet je kind, niet je buurman. Geef je wachtwoord nooit aan iemand anders. Begrijp je dit? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! Een wachtwoord is heel persoonlijk. Morgen leer je een goed wachtwoord maken.",
+            "bij_goed_antwoord_nee": "Een wachtwoord is een geheime code voor jouw account. Alleen jij mag het weten. Stuur JA als je het begrijpt.",
+            "bij_fout_antwoord": "Stuur JA of NEE.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M05L02",
+            "dag": 24,
+            "titel": "Een goed wachtwoord",
+            "leerdoel": "De gebruiker kan een sterk wachtwoord herkennen en aanmaken",
+            "bericht": "Les 23: Goed wachtwoord 💪 Een goed wachtwoord heeft: minstens 8 letters, grote en kleine letters, een cijfer. Voorbeeld: Mijn#Huis2024. Wat is beter? 1. amsterdam 2. Amst3rdam! 3. 12345. Stuur 1, 2 of 3.",
+            "verwacht_antwoord": ["2"],
+            "bij_goed_antwoord": "Juist! Amst3rdam! is het sterkste. Morgen: hoe bewaar je een wachtwoord.",
+            "bij_fout_antwoord": "Het beste wachtwoord is 2: Amst3rdam! Het heeft grote en kleine letters en een cijfer.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M05L03",
+            "dag": 25,
+            "titel": "Wachtwoord bewaren",
+            "leerdoel": "De gebruiker weet hoe ze een wachtwoord veilig bewaart",
+            "bericht": "Les 24: Wachtwoord bewaren 📓 Schrijf je wachtwoord op in een notitieboekje thuis. Niet op je telefoon. Niet in een sms. Niet op een papiertje bij je telefoon. Thuis in een veilige la. Heb jij een veilige plek thuis? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! Schrijf straks je wachtwoorden daarin. Morgen: gevaarlijke berichten herkennen.",
+            "bij_goed_antwoord_nee": "Koop een klein notitieboekje. Bewaar het thuis op een veilige plek.",
+            "bij_fout_antwoord": "Stuur JA of NEE.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M05L04",
+            "dag": 26,
+            "titel": "Phishing herkennen",
+            "leerdoel": "De gebruiker kan een nep-bericht herkennen",
+            "bericht": "Les 25: Nep-berichten ⚠️ Soms sturen criminelen nep-berichten. Ze doen alsof ze de bank of overheid zijn. Ze vragen om je gegevens of wachtwoord. Dit heet phishing. De bank of overheid vraagt NOOIT je wachtwoord via sms of WhatsApp. Snap je dat? Stuur JA.",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Goed! Morgen een oefening met echte voorbeelden.",
+            "bij_fout_antwoord": "Belangrijk: echte bedrijven vragen nooit je wachtwoord via sms. Stuur JA als je het begrijpt.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M05L05",
+            "dag": 27,
+            "titel": "Phishing oefening",
+            "leerdoel": "De gebruiker kan een phishing-bericht herkennen in een praktijkvoorbeeld",
+            "bericht": "Les 26: Oefening 🎯 Welk bericht is verdacht?\n1. Belastingdienst: uw aangifte is ontvangen.\n2. DRINGEND: uw rekening is geblokkeerd. Stuur uw pincode naar 0612345678.\n3. DigiD: uw account is aangemaakt.\nStuur 1, 2 of 3.",
+            "verwacht_antwoord": ["2"],
+            "bij_goed_antwoord": "Juist! Bericht 2 is nep. Echte bedrijven vragen nooit om je pincode. Verwijder zulke berichten altijd.",
+            "bij_fout_antwoord": "Bericht 2 is het gevaarlijkste. Niemand vraagt om je pincode via sms of WhatsApp.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M05L06",
+            "dag": 28,
+            "titel": "Persoonlijke gegevens",
+            "leerdoel": "De gebruiker begrijpt welke persoonlijke gegevens ze niet zomaar deelt",
+            "bericht": "Les 27: Jouw gegevens 🛡️ Sommige gegevens zijn privé: BSN-nummer, paspoortnummer, bankgegevens, wachtwoorden. Geef deze nooit zomaar. Alleen aan de echte overheid via de officiële website. Wat is jouw BSN? 1. Dat zeg ik niet, dat is privé 2. Ik geef het als iemand erom vraagt. Stuur 1 of 2.",
+            "verwacht_antwoord": ["1"],
+            "bij_goed_antwoord": "Goed! Je BSN is privé. Morgen beginnen we met e-mail aanmaken.",
+            "bij_fout_antwoord": "Je BSN is heel privé. Geef het nooit zomaar. Alleen als jij zelf inlogt op de echte website.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M06",
+        "titel": "E-mail aanmaken",
+        "beschrijving": "Wat is e-mail, een e-mailadres aanmaken, berichten sturen en ontvangen",
+        "kanaal": "whatsapp",
+        "niveau": "basis",
+        "volgorde": 6,
+        "lessen": [
+          {
+            "id": "M06L01",
+            "dag": 29,
+            "titel": "Wat is e-mail?",
+            "leerdoel": "De gebruiker begrijpt wat e-mail is en waarvoor je het gebruikt",
+            "bericht": "Les 28: E-mail 📧 Een e-mail is een digitale brief. Je stuurt hem via internet. Een e-mailadres ziet er zo uit: naam@gmail.com. Je hebt een e-mailadres nodig voor: DigiD aanmaken, toeslagen aanvragen, brieven van de overheid ontvangen. Heb jij al een e-mailadres? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! We gaan het straks gebruiken. Stuur je e-mailadres zodat we het kunnen controleren. Of stuur SKIP om door te gaan.",
+            "bij_goed_antwoord_nee": "Dan gaan we er een aanmaken. Morgen leer je hoe.",
+            "bij_fout_antwoord": "Stuur JA als je een e-mailadres hebt, of NEE als niet.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M06L02",
+            "dag": 30,
+            "titel": "Gmail app installeren",
+            "leerdoel": "De gebruiker kan de Gmail-app installeren via de app store",
+            "bericht": "Les 29: Gmail app installeren 📱 We gebruiken Gmail voor je e-mail. Gmail is een gratis app van Google. Open de app store op je telefoon (Play Store of App Store). Zoek naar: Gmail. Tik op Installeren. Gelukt? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt", "al"],
+            "bij_goed_antwoord": "Goed! Gmail staat nu op je telefoon. Morgen: je e-mailadres aanmaken.",
+            "bij_fout_antwoord": "Stuur HULP dan gaan we stap voor stap door de installatie.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M06L03",
+            "dag": 31,
+            "titel": "E-mailadres aanmaken",
+            "leerdoel": "De gebruiker kan een Gmail-account aanmaken",
+            "bericht": "Les 30: E-mailadres aanmaken ✉️ Open de Gmail-app. Tik op Account aanmaken. Kies: Voor mezelf. Vul in: voornaam, achternaam. Kies een gebruikersnaam voor je e-mail. Bijvoorbeeld: voornaam.achternaam@gmail.com. Kies een wachtwoord. Schrijf alles op in je notitieboekje! Gelukt? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Gefeliciteerd! Je hebt een e-mailadres 🎉 Schrijf het op. Morgen: een e-mail lezen en sturen.",
+            "bij_fout_antwoord": "Niet gelukt? Stuur HULP dan gaan we het stap voor stap doen.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M06L04",
+            "dag": 32,
+            "titel": "E-mail lezen en sturen",
+            "leerdoel": "De gebruiker kan een e-mail lezen en versturen vanuit de Gmail-app",
+            "bericht": "Les 31: E-mail lezen en sturen 📨 Open Gmail. Dit is je inbox. Hier komen brieven aan. Om een e-mail te sturen: tik op het potloodje rechtsonder. Bij Aan: typ info@digidoen.nl. Bij Onderwerp: Hallo. In de tekst: je naam. Tik op het pijltje om te versturen. Gelukt? Stuur JA.",
+            "verwacht_antwoord": ["ja", "gelukt", "klaar"],
+            "bij_goed_antwoord": "Bravo! Je kunt nu e-mails sturen en ontvangen. Dit is nodig voor DigiD. Morgen: beginnen we met de overgang naar e-mail voor onze lessen.",
+            "bij_fout_antwoord": "Probeer het opnieuw. Open Gmail. Zoek het potloodje. Stuur HULP als het niet lukt.",
+            "voortgang_vereist": true
+          }
+        ]
+      },
+
+      {
+        "id": "M07",
+        "titel": "Overgang naar e-mail",
+        "beschrijving": "Volledig begeleide overgang van WhatsApp-lessen naar e-mail. De gebruiker gaat DigiDoen-lessen via e-mail ontvangen en leert tegelijk hoe e-mail werkt met de overheid.",
+        "kanaal": "whatsapp",
+        "niveau": "basis",
+        "volgorde": 7,
+        "kanaal_overgang": {
+          "van": "whatsapp",
+          "naar": "email",
+          "voorwaarden": ["e-mailadres aangemaakt en geverifieerd", "Gmail-app geinstalleerd"],
+          "terugvaloptie": true
+        },
+        "lessen": [
+          {
+            "id": "M07L01",
+            "dag": 33,
+            "titel": "Jouw e-mailadres doorgeven",
+            "leerdoel": "De gebruiker geeft het e-mailadres door zodat DigiDoen lessen per mail kan sturen",
+            "bericht": "Les 32: E-mailadres doorgeven 📧 Goed nieuws! De volgende lessen gaan via e-mail. Dat is handig want de overheid stuurt ook brieven per e-mail. Stuur jouw e-mailadres hier in WhatsApp. Dan sturen wij je de eerste e-mailsles. Stuur je e-mailadres nu.",
+            "verwacht_antwoord": ["*@*.*"],
+            "bij_goed_antwoord": "Ontvangen! We sturen nu een test-e-mail naar jouw adres. Kijk in je Gmail-app of hij is aangekomen. Stuur dan: ONTVANGEN.",
+            "bij_fout_antwoord": "Stuur je e-mailadres. Dat ziet er zo uit: naam@gmail.com",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M07L02",
+            "dag": 33,
+            "titel": "Test-e-mail ontvangen",
+            "leerdoel": "De gebruiker bevestigt dat de test-e-mail is ontvangen en kan reageren per e-mail",
+            "bericht": "Goed! Open nu de Gmail-app. Kijk of er een e-mail is van DigiDoen met als onderwerp: Test. Lees de e-mail. Klik op Beantwoorden. Stuur terug: KLAAR. Zo bevestig je dat e-mail werkt.",
+            "verwacht_antwoord": ["klaar"],
+            "kanaal_verificatie": "email",
+            "bij_goed_antwoord": "Perfect! Jouw e-mail werkt. Vanaf morgen ontvang je de lessen via e-mail. We stoppen dan met WhatsApp-lessen. De overstap is gelukt!",
+            "bij_fout_antwoord": "Niet ontvangen? Kijk ook in je spam-map. Voeg info@digidoen.nl toe als contact. Stuur HULP als het niet lukt.",
+            "voortgang_vereist": true,
+            "overgang_trigger": true,
+            "notitie": "Na ontvangen e-mail antwoord schakelt systeem over naar e-mailkanaal"
+          },
+          {
+            "id": "M07L03",
+            "dag": 34,
+            "titel": "Eerste e-mailsles",
+            "leerdoel": "De gebruiker ontvangt succesvol de eerste les per e-mail en beantwoordt die",
+            "bericht": "Gefeliciteerd met je eerste les via e-mail! 🎉 Je bent nu op drie kanalen actief: sms, WhatsApp EN e-mail. Dat zijn precies de kanalen die de overheid ook gebruikt. In de volgende lessen ga je leren hoe je e-mails van de overheid herkent, leest en beantwoordt. Klaar voor de volgende stap? Stuur: JA",
+            "kanaal": "email",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Mooi! Morgen: DigiD aanmaken.",
+            "bij_fout_antwoord": "Stuur JA om door te gaan.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M08",
+        "titel": "DigiD",
+        "beschrijving": "Wat is DigiD, hoe maak je het aan, hoe log je in",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 8,
+        "lessen": [
+          {
+            "id": "M08L01",
+            "dag": 35,
+            "titel": "Wat is DigiD?",
+            "leerdoel": "De gebruiker begrijpt wat DigiD is en waarvoor je het gebruikt",
+            "bericht": "Les 33: DigiD 🔑\n\nDigiD is jouw digitale identiteitsbewijs voor de overheid. Met DigiD log je in op websites van de overheid. Bijvoorbeeld: Belastingdienst, UWV, gemeente Amsterdam, zorgverzekeraar.\n\nJe hebt DigiD nodig om toeslagen aan te vragen en zaken te regelen.\n\nWil je een DigiD aanmaken? Stuur: JA",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Goed! We gaan dat doen. Je hebt nodig:\n- Je BSN-nummer (staat op je identiteitsbewijs)\n- Je e-mailadres\n- Je telefoonnummer\n\nHeb je dit klaarliggen? Stuur JA als je klaar bent.",
+            "bij_fout_antwoord": "Stuur JA als je wilt beginnen.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M08L02",
+            "dag": 36,
+            "titel": "DigiD aanvragen stap 1",
+            "leerdoel": "De gebruiker kan naar de DigiD-website navigeren en het aanvraagformulier openen",
+            "bericht": "Les 34: DigiD aanmaken stap 1\n\nOpen je browser. Ga naar: www.digid.nl\n\nKies: DigiD aanvragen\n\nVul in: je burgerservicenummer (BSN). Dat is het 9-cijferige nummer op je ID-kaart of paspoort.\n\nLukt het? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Goed! Je bent begonnen. Morgen: de rest van het aanvraagformulier.",
+            "bij_fout_antwoord": "Je BSN staat op je identiteitsbewijs. Het is 9 cijfers lang. Zoek je ID-kaart erbij. Stuur HULP als je het niet vindt.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M08L03",
+            "dag": 37,
+            "titel": "DigiD aanvragen stap 2",
+            "leerdoel": "De gebruiker kan het DigiD-aanvraagformulier volledig invullen",
+            "bericht": "Les 35: DigiD stap 2\n\nVul verder in:\n- Je e-mailadres\n- Je gewenste gebruikersnaam\n\nDe gebruikersnaam is jouw inlognaam. Kies iets wat je makkelijk onthoudt. Schrijf het op in je notitieboekje.\n\nKlik op Volgende. Lukt het? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Goed! Je krijgt straks een brief van DigiD thuis met een activeringscode. Morgen: wat te doen met die brief.",
+            "bij_fout_antwoord": "Stuur HULP als je vastzit.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M08L04",
+            "dag": 38,
+            "titel": "DigiD activeren",
+            "leerdoel": "De gebruiker weet hoe ze de DigiD-activeringscode gebruikt",
+            "bericht": "Les 36: DigiD activeren\n\nNa je aanvraag krijg je een brief thuis. In de brief staat een code van 6 cijfers.\n\nGa naar: www.digid.nl\nKlik op: DigiD activeren\nVul de code in\n\nDaarna is je DigiD klaar!\n\nHeb je de brief al? Stuur JA, NEE of BEN BEZIG.",
+            "verwacht_antwoord": ["ja", "nee", "ben bezig", "bezig", "wacht"],
+            "bij_goed_antwoord_ja": "Mooi! Activeer je DigiD nu. Stuur KLAAR als het gelukt is.",
+            "bij_goed_antwoord_nee": "De brief komt binnen 5 werkdagen. We gaan alvast verder. Bewaar de brief goed.",
+            "bij_goed_antwoord_bezig": "Goed! Zodra de brief er is, activeer je DigiD. Stuur dan: KLAAR.",
+            "bij_fout_antwoord": "Stuur JA als je de brief hebt, NEE als nog niet.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M08L05",
+            "dag": 39,
+            "titel": "Inloggen met DigiD",
+            "leerdoel": "De gebruiker kan succesvol inloggen op een overheidswebsite met DigiD",
+            "bericht": "Les 37: Inloggen met DigiD 🔓\n\nGa naar: mijnoverheid.nl\nKlik op: Inloggen\nKies: DigiD\nTyp je gebruikersnaam en wachtwoord\nKlik op: Inloggen\n\nJe bent nu ingelogd bij de overheid!\n\nGelukt? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Geweldig! Je bent ingelogd bij MijnOverheid. Dit is jouw persoonlijke pagina bij de overheid. Morgen: wat je hier kunt doen.",
+            "bij_fout_antwoord": "Controleer je gebruikersnaam en wachtwoord. Kijk in je notitieboekje. Stuur HULP als het echt niet lukt.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M08L06",
+            "dag": 40,
+            "titel": "DigiD veiligheid",
+            "leerdoel": "De gebruiker begrijpt hoe ze DigiD veilig gebruiken",
+            "bericht": "Les 38: DigiD veilig 🛡️\n\nDigiD stuurt NOOIT een sms met je wachtwoord.\nDigiD belt je NOOIT om je code te vragen.\n\nAls iemand jou belt namens DigiD: hang op.\nAls je een sms krijgt met een DigiD-link: klik niet.\n\nGa altijd zelf naar www.digid.nl\n\nBegrijp je dit? Stuur JA.",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Heel goed! Je DigiD is nu veilig. Morgen: MijnOverheid gebruiken.",
+            "bij_fout_antwoord": "Stuur JA als je het begrijpt. Dit is heel belangrijk voor jouw veiligheid.",
+            "voortgang_vereist": true
+          }
+        ]
+      },
+
+      {
+        "id": "M09",
+        "titel": "MijnOverheid",
+        "beschrijving": "Hoe gebruik je MijnOverheid, digitale post lezen, gegevens controleren",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 9,
+        "lessen": [
+          {
+            "id": "M09L01",
+            "dag": 41,
+            "titel": "Wat is MijnOverheid?",
+            "leerdoel": "De gebruiker begrijpt wat MijnOverheid is",
+            "bericht": "Les 39: MijnOverheid\n\nOp mijnoverheid.nl vind je:\n- Al je officiële brieven van de overheid\n- Je persoonlijke gegevens die de overheid heeft\n- Je DigiD-inloghistorie\n\nLog in op mijnoverheid.nl met DigiD.\n\nZie je jouw naam bovenaan? Stuur JA.",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Goed! Dit is jouw persoonlijke overheidspagina. Morgen: brieven lezen.",
+            "bij_fout_antwoord": "Probeer opnieuw in te loggen via www.mijnoverheid.nl. Gebruik je DigiD-gebruikersnaam en wachtwoord.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M09L02",
+            "dag": 42,
+            "titel": "Digitale post lezen",
+            "leerdoel": "De gebruiker kan digitale post van de overheid openen en lezen",
+            "bericht": "Les 40: Digitale post 📬\n\nOp MijnOverheid kun je digitale post aanzetten. Dan krijg je brieven van de overheid digitaal.\n\nKlik op: Berichtenbox\n\nHier staan je berichten van gemeenten, Belastingdienst, UWV enzovoort.\n\nZie je de Berichtenbox? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! In de Berichtenbox staan al je officiële brieven. Morgen: je gegevens controleren.",
+            "bij_goed_antwoord_nee": "Scroll omlaag op de pagina. Zoek naar Berichtenbox. Klik erop als je het ziet.",
+            "bij_fout_antwoord": "Stuur JA als je de Berichtenbox ziet, NEE als niet.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M09L03",
+            "dag": 43,
+            "titel": "Persoonlijke gegevens controleren",
+            "leerdoel": "De gebruiker kan de eigen persoonsgegevens controleren via MijnOverheid",
+            "bericht": "Les 41: Jouw gegevens\n\nOp MijnOverheid zie je welke gegevens de overheid van jou heeft: adres, geboortedatum, BSN.\n\nKlik op: Persoonlijke gegevens\n\nKlopt je adres? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! Je gegevens kloppen. Morgen: toeslagen aanvragen.",
+            "bij_goed_antwoord_nee": "Als je adres niet klopt, geef dit door aan de gemeente via amsterdam.nl.",
+            "bij_fout_antwoord": "Stuur JA als alles klopt, NEE als iets niet klopt.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M10",
+        "titel": "Toeslagen en regelingen",
+        "beschrijving": "Hoe vraag je zorgtoeslag, huurtoeslag en andere toeslagen aan",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 10,
+        "lessen": [
+          {
+            "id": "M10L01",
+            "dag": 44,
+            "titel": "Wat zijn toeslagen?",
+            "leerdoel": "De gebruiker begrijpt wat toeslagen zijn",
+            "bericht": "Les 42: Toeslagen 💰\n\nDe overheid helpt mensen met weinig geld. Dat heet een toeslag.\n\nEr zijn 4 toeslagen:\n1. Zorgtoeslag: voor je zorgverzekering\n2. Huurtoeslag: als je huurt en weinig verdient\n3. Kinderopvangtoeslag: voor de kinderopvang\n4. Kinderbijslag: voor kinderen\n\nDenk jij dat je ergens recht op hebt? Stuur JA of WEET NIET.",
+            "verwacht_antwoord": ["ja", "weet niet", "nee"],
+            "bij_goed_antwoord": "Morgen leer je hoe je dit controleert.",
+            "bij_fout_antwoord": "Stuur JA of WEET NIET.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M10L02",
+            "dag": 45,
+            "titel": "Zorgtoeslag aanvragen",
+            "leerdoel": "De gebruiker kan de zorgtoeslag aanvragen via toeslagen.nl",
+            "bericht": "Les 43: Zorgtoeslag aanvragen\n\nGa naar: toeslagen.nl\nLog in met DigiD\nKlik op: Zorgtoeslag aanvragen\nVul je gegevens in\n\nJe hebt nodig:\n- Je BSN\n- Je jaarinkomen (schatting)\n- Je zorgverzekeringsnummer\n\nGelukt? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "klaar"],
+            "bij_goed_antwoord": "Goed bezig! Morgen: huurtoeslag.",
+            "bij_fout_antwoord": "Stuur HULP als je vastloopt.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M10L03",
+            "dag": 46,
+            "titel": "Huurtoeslag aanvragen",
+            "leerdoel": "De gebruiker weet hoe ze huurtoeslag aanvraagt",
+            "bericht": "Les 44: Huurtoeslag aanvragen\n\nHuur je een woning en verdien je weinig? Dan heb je misschien recht op huurtoeslag.\n\nGa naar toeslagen.nl\nLog in met DigiD\nKlik op: Huurtoeslag aanvragen\nVul in: je huurprijs en jaarinkomen\n\nGelukt? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "klaar", "ingediend"],
+            "bij_goed_antwoord": "Super! Je kunt nu zelfstandig toeslagen aanvragen. Morgen: gemeente Amsterdam online.",
+            "bij_fout_antwoord": "Niet gelukt? Stuur HULP dan helpen we je.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M10L04",
+            "dag": 47,
+            "titel": "UWV en uitkering",
+            "leerdoel": "De gebruiker weet hoe ze het UWV online kan raadplegen",
+            "bericht": "Les 45: UWV online\n\nUWV betaalt uitkeringen als je zonder werk zit.\n\nGa naar: werk.nl\nLog in met DigiD\n\nHier zie je:\n- Je uitkeringsstatus\n- Je loonstroken\n- Je arbeidsgeschiedenis\n\nZie je je gegevens? Stuur JA, NEE of NVT.",
+            "verwacht_antwoord": ["ja", "nee", "nvt"],
+            "bij_goed_antwoord_ja": "Goed! Zo kun je je uitkering zelf bijhouden. Morgen: gemeente Amsterdam.",
+            "bij_goed_antwoord_nee": "Geen uitkering nu? Goed om te weten hoe het werkt als je het later nodig hebt.",
+            "bij_fout_antwoord": "Stuur JA, NEE of NVT.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M11",
+        "titel": "Gemeente Amsterdam online",
+        "beschrijving": "Digitaal zaken regelen met de gemeente Amsterdam",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 11,
+        "lessen": [
+          {
+            "id": "M11L01",
+            "dag": 48,
+            "titel": "Amsterdam.nl",
+            "leerdoel": "De gebruiker kan de gemeentewebsite navigeren en inloggen",
+            "bericht": "Les 46: Gemeente Amsterdam 🏛️\n\nVia amsterdam.nl regel je alles met de gemeente.\n\nGa naar amsterdam.nl\nKlik op Inloggen rechtsboven\nLog in met DigiD\n\nJe ziet nu je persoonlijke pagina bij de gemeente Amsterdam.\n\nLukt het inloggen? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Super! Je bent ingelogd bij de gemeente Amsterdam. Morgen: wat kun je hier regelen.",
+            "bij_fout_antwoord": "Probeer opnieuw. Ga naar amsterdam.nl en klik op Inloggen. Gebruik je DigiD.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M11L02",
+            "dag": 49,
+            "titel": "Adreswijziging doorgeven",
+            "leerdoel": "De gebruiker kan een verhuizing digitaal doorgeven",
+            "bericht": "Les 47: Verhuizing doorgeven 🏠\n\nAls je verhuist moet je dit binnen 5 dagen doorgeven aan de gemeente. Dat kan nu digitaal!\n\nGa naar amsterdam.nl\nZoek naar: verhuizing doorgeven\nLog in met DigiD\nVul je nieuwe adres in\n\nJe hoeft niet meer naar het stadhuis!\n\nHeb je dit ooit nodig gehad? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord": "Goed om te weten! Morgen: afspraken maken.",
+            "bij_fout_antwoord": "Stuur JA of NEE.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M11L03",
+            "dag": 50,
+            "titel": "Afspraak maken en paspoort",
+            "leerdoel": "De gebruiker kan online een afspraak maken met de gemeente",
+            "bericht": "Les 48: Afspraak maken en paspoort 📅\n\nOnline afspraak maken:\nGa naar amsterdam.nl\nZoek naar: afspraak maken\nKies het onderwerp\nKies datum en tijd\nJe krijgt een bevestiging per e-mail\n\nVoor een paspoort of ID-kaart:\nZoek: paspoort aanvragen\nMaak een afspraak\nBreng mee: foto, huidig bewijs, betaalmiddel\n\nBegrijp je hoe dit werkt? Stuur JA.",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Goed! Je hoeft niet meer urenlang te wachten. Morgen: zorg online.",
+            "bij_fout_antwoord": "Stuur JA als je het begrijpt.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M12",
+        "titel": "Zorg en gezondheid online",
+        "beschrijving": "Digitaal communiceren met huisarts en zorgverzekeraar",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 12,
+        "lessen": [
+          {
+            "id": "M12L01",
+            "dag": 51,
+            "titel": "Zorgverzekering online",
+            "leerdoel": "De gebruiker kan inloggen op de website van de zorgverzekeraar",
+            "bericht": "Les 49: Zorgverzekering 🏥\n\nJe zorgverzekeraar heeft een website. Daar kun je:\n- Je polis bekijken\n- Declaraties indienen\n- Vergoedingen opzoeken\n\nLog in op de website van jouw zorgverzekeraar met DigiD.\n\nWeet je welke zorgverzekeraar je hebt? Stuur de naam.",
+            "verwacht_antwoord": ["*"],
+            "bij_goed_antwoord": "Goed! Zoek de website van die verzekeraar. Log in met DigiD. Morgen: huisarts online.",
+            "bij_fout_antwoord": "Weet je het niet? Kijk op je zorgpas of oude brieven.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M12L02",
+            "dag": 52,
+            "titel": "Huisarts online en thuisarts.nl",
+            "leerdoel": "De gebruiker kan online een afspraak maken bij de huisarts en thuisarts.nl gebruiken",
+            "bericht": "Les 50: Huisarts en gezondheid online 👨‍⚕️\n\nVeel huisartsen hebben een online portaal voor: afspraken, herhaalrecepten, berichten.\n\nVoor betrouwbare medische informatie: www.thuisarts.nl\nDit is de website van alle Nederlandse huisartsen. Geen nepinformatie.\n\nProbeer: zoek op thuisarts.nl naar een klacht die je kent.\n\nWat lees je? Stuur een woord.",
+            "verwacht_antwoord": ["*"],
+            "bij_goed_antwoord": "Goed! Onthoud: thuisarts.nl voor betrouwbare informatie. Morgen: belastingen.",
+            "bij_fout_antwoord": "Ga naar thuisarts.nl en zoek naar een klacht. Stuur wat je leest.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M13",
+        "titel": "Belastingdienst en werk online",
+        "beschrijving": "Belastingaangifte begrijpen en online werk zoeken",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 13,
+        "lessen": [
+          {
+            "id": "M13L01",
+            "dag": 53,
+            "titel": "Belastingdienst online",
+            "leerdoel": "De gebruiker kan inloggen op belastingdienst.nl en eigen gegevens bekijken",
+            "bericht": "Les 51: Belastingdienst 📊\n\nIedereen in Nederland betaalt belasting. Elke jaar doe je aangifte via belastingdienst.nl.\n\nGa naar: belastingdienst.nl\nKlik op: Inloggen\nKies: DigiD\nLog in\n\nJe ziet: je aangifte, je toeslagen, je brieven.\n\nLukt het? Stuur JA of HULP.",
+            "verwacht_antwoord": ["ja", "hulp", "gelukt"],
+            "bij_goed_antwoord": "Uitstekend! Je kunt nu je belastingzaken online bekijken. Morgen: werk zoeken.",
+            "bij_fout_antwoord": "Probeer het nog eens. Ga naar belastingdienst.nl en log in met DigiD.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M13L02",
+            "dag": 54,
+            "titel": "Werk zoeken en Woningnet",
+            "leerdoel": "De gebruiker weet hoe ze werk zoekt via werk.nl en een woning via woningnet.nl",
+            "bericht": "Les 52: Werk en wonen 🏢🏠\n\nWerk zoeken: ga naar werk.nl. Log in met DigiD. Zoek vacatures op postcode of beroep.\n\nWoning zoeken: ga naar woningnet.nl. Maak een account aan. Schrijf je in. Elke dag telt voor je inschrijfduur!\n\nHeb je al een Woningnet-account? Stuur JA of NEE.",
+            "verwacht_antwoord": ["ja", "nee"],
+            "bij_goed_antwoord_ja": "Goed! Blijf regelmatig reageren op woningen. Morgen: veiligheid en oplichting.",
+            "bij_goed_antwoord_nee": "Schrijf je zo snel mogelijk in op woningnet.nl. Elke dag telt!",
+            "bij_fout_antwoord": "Stuur JA of NEE.",
+            "voortgang_vereist": false
+          }
+        ]
+      },
+
+      {
+        "id": "M14",
+        "titel": "Veiligheid en online oplichting",
+        "beschrijving": "Gevorderde veiligheidslessen over WhatsApp-fraude en internetbankieren",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 14,
+        "lessen": [
+          {
+            "id": "M14L01",
+            "dag": 55,
+            "titel": "WhatsApp-fraude",
+            "leerdoel": "De gebruiker herkent WhatsApp-fraude en weet hoe te reageren",
+            "bericht": "Les 53: WhatsApp-fraude ⚠️\n\nCriminelen sturen soms WhatsApp-berichten namens jouw kind of familielid. Ze zeggen: nieuw nummer, ik heb geld nodig. Dit is fraude.\n\nStuur NOOIT geld op basis van een WhatsApp-bericht van een onbekend nummer.\n\nBel altijd het bekende nummer om te controleren.\n\nBegrijp je dit? Stuur JA.",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Goed! Bel altijd even terug op het oude, bekende nummer. Morgen: veilig bankieren.",
+            "bij_fout_antwoord": "Stuur JA als je het begrijpt. Dit is heel belangrijk.",
+            "voortgang_vereist": true
+          },
+          {
+            "id": "M14L02",
+            "dag": 56,
+            "titel": "Veilig internetbankieren",
+            "leerdoel": "De gebruiker kan veilig internetbankieren en herkent nep-bankwebsites",
+            "bericht": "Les 54: Veilig bankieren 🔒\n\nLet altijd op:\n- Het adres begint met https:// (met s)\n- Er staat een slotje in de adresbalk\n- De bank vraagt NOOIT je pincode online\n\nTwijfel je of een website echt is? Sluit het venster. Ga opnieuw naar de officiële website.\n\nBegrijp je dit? Stuur JA.",
+            "verwacht_antwoord": ["ja"],
+            "bij_goed_antwoord": "Goed! Het slotje en https:// zijn tekenen van een veilige website. Morgen: de eindtoets.",
+            "bij_fout_antwoord": "Stuur JA als je het begrijpt.",
+            "voortgang_vereist": true
+          }
+        ]
+      },
+
+      {
+        "id": "M15",
+        "titel": "Herhaling en eindtoets",
+        "beschrijving": "Herhaling van alle hoofdonderwerpen en eindtoets",
+        "kanaal": "email",
+        "niveau": "overheid",
+        "volgorde": 15,
+        "lessen": [
+          {
+            "id": "M15L01",
+            "dag": 57,
+            "titel": "Herhaling: telefoon, apps en internet",
+            "leerdoel": "De gebruiker herhaalt telefoon, apps en internet",
+            "bericht": "Les 55: Herhaling deel 1 📱\n\nTest jezelf! Welke van deze dingen kun jij nu?\n1. Je telefoon ontgrendelen\n2. Een app installeren via de app store\n3. Iets opzoeken op internet\n4. Een e-mail sturen\n\nStuur de nummers die je kunt. Stuur: 1 2 3 4 als je alles kunt.",
+            "verwacht_antwoord": ["*"],
+            "bij_goed_antwoord": "Uitstekend! Morgen: herhaling DigiD en overheid.",
+            "bij_fout_antwoord": "Welke kun je niet? Stuur het nummer en we oefenen het nog een keer.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M15L02",
+            "dag": 58,
+            "titel": "Herhaling: overheid en diensten",
+            "leerdoel": "De gebruiker herhaalt DigiD en overheidsdiensten",
+            "bericht": "Les 56: Herhaling deel 2 🏛️\n\nTest jezelf! Wat kun jij nu?\n1. Inloggen met DigiD\n2. MijnOverheid openen\n3. Zorgtoeslag aanvragen\n4. Afspraak maken met gemeente Amsterdam\n5. Brief van overheid lezen op MijnOverheid\n\nStuur de nummers die je kunt.",
+            "verwacht_antwoord": ["*"],
+            "bij_goed_antwoord": "Super! Morgen de eindtoets.",
+            "bij_fout_antwoord": "Welke kun je niet? Stuur het nummer en we herhalen het.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M15L03",
+            "dag": 59,
+            "titel": "Eindtoets 1: veiligheid",
+            "leerdoel": "Meting eindvaardigheden veiligheid",
+            "bericht": "Eindtoets 1 van 4\n\nJe ontvangt een sms: DRINGEND: uw DigiD is geblokkeerd. Klik hier om te herstellen.\n\nWat doe je?\n1. Ik klik op de link\n2. Ik verwijder het bericht en ga zelf naar digid.nl\n3. Ik bel het nummer in het bericht\n\nStuur 1, 2 of 3.",
+            "verwacht_antwoord": ["2"],
+            "bij_goed_antwoord": "Juist! Altijd zelf naar de officiële website. Nooit klikken op links in verdachte berichten.",
+            "bij_fout_antwoord": "Het goede antwoord is 2. Verwijder het bericht en ga zelf naar digid.nl.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M15L04",
+            "dag": 60,
+            "titel": "Eindtoets 2: toeslagen",
+            "leerdoel": "Meting eindvaardigheden overheid en toeslagen",
+            "bericht": "Eindtoets 2 van 4\n\nJe wilt weten of je recht hebt op zorgtoeslag.\n\nWaar ga je naartoe?\n1. facebook.com\n2. toeslagen.nl\n3. google.com\n\nStuur 1, 2 of 3.",
+            "verwacht_antwoord": ["2"],
+            "bij_goed_antwoord": "Juist! toeslagen.nl is de officiële website van de Belastingdienst voor toeslagen.",
+            "bij_fout_antwoord": "Het goede antwoord is 2. toeslagen.nl. Log daar in met DigiD.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M15L05",
+            "dag": 61,
+            "titel": "Eindtoets 3: apps en gemeente",
+            "leerdoel": "Meting eindvaardigheden apps en gemeente",
+            "bericht": "Eindtoets 3 van 4\n\nJe wil een nieuwe app op je telefoon. Hoe doe je dat?\n1. Ik zoek de app op in de Play Store of App Store en klik op Installeren\n2. Ik vraag iemand anders om het te doen\n3. Apps komen vanzelf op je telefoon\n\nStuur 1, 2 of 3.",
+            "verwacht_antwoord": ["1"],
+            "bij_goed_antwoord": "Juist! Via de app store. Jij kunt dit nu zelf. Nog een laatste vraag.",
+            "bij_fout_antwoord": "Het goede antwoord is 1. Je installeert apps zelf via de Play Store of App Store.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M15L06",
+            "dag": 62,
+            "titel": "Eindtoets 4: gemeente Amsterdam",
+            "leerdoel": "Meting eindvaardigheden gemeente Amsterdam",
+            "bericht": "Eindtoets 4 van 4\n\nJe wil een afspraak maken bij de gemeente Amsterdam. Hoe doe je dat het makkelijkst?\n1. Ik ga naar het stadhuis en wacht in de rij\n2. Ik ga naar amsterdam.nl en maak online een afspraak\n3. Ik bel de gemeente\n\nStuur 1, 2 of 3.",
+            "verwacht_antwoord": ["2"],
+            "bij_goed_antwoord": "Perfect! Via amsterdam.nl is het snelst en makkelijkst. Je bent klaar voor het diploma!",
+            "bij_fout_antwoord": "Het gemakkelijkste is 2: online via amsterdam.nl. Dan kies je zelf datum en tijd.",
+            "voortgang_vereist": false
+          },
+          {
+            "id": "M15L07",
+            "dag": 63,
+            "titel": "Diploma en afsluiting",
+            "leerdoel": "Afsluiting van het leertraject",
+            "bericht": "Gefeliciteerd! 🎉🎓\n\nJe hebt DigiDoen afgerond!\n\nJe kunt nu:\n✓ Je telefoon en apps gebruiken\n✓ Apps installeren via de app store\n✓ Internet en e-mail\n✓ DigiD gebruiken\n✓ Toeslagen aanvragen\n✓ Brieven van de overheid lezen\n✓ Online zaken regelen met gemeente Amsterdam\n✓ Veilig online zijn\n\nStuur KLAAR om je certificaat te ontvangen.",
+            "verwacht_antwoord": ["klaar", "bedankt", "klaar!", "top"],
+            "bij_goed_antwoord": "Je digitale certificaat wordt naar je e-mailadres gestuurd. Goed gedaan! Je kunt nu zelfstandig digitaal deelnemen aan de Nederlandse samenleving.",
+            "bij_fout_antwoord": "Stuur KLAAR om af te sluiten.",
+            "voortgang_vereist": false
+          }
+        ]
+      }
+    ],
+
+    "kanaal_overgangen": {
+      "sms_naar_whatsapp": {
+        "module_trigger": "M04",
+        "les_trigger": "M04L05",
+        "verificatiemethode": "inkomend_whatsapp_bericht",
+        "stap_voor_stap": [
+          "Gebruiker installeert WhatsApp via app store (M03)",
+          "Gebruiker stelt WhatsApp in met telefoonnummer (M04L01 t/m M04L04)",
+          "Gebruiker voegt DigiDoen toe als WhatsApp-contact (M04L05)",
+          "Gebruiker stuurt eerste WhatsApp-bericht: KLAAR",
+          "Systeem verifieert ontvangst via WhatsApp",
+          "Systeem schakelt over naar WhatsApp-kanaal",
+          "Terugval naar SMS beschikbaar als WhatsApp mislukt"
+        ],
+        "terugval_conditie": "geen_whatsapp_bevestiging_na_48_uur"
+      },
+      "whatsapp_naar_email": {
+        "module_trigger": "M07",
+        "les_trigger": "M07L02",
+        "verificatiemethode": "inkomend_email_bericht",
+        "stap_voor_stap": [
+          "Gebruiker installeert Gmail-app (M06L02)",
+          "Gebruiker maakt e-mailadres aan (M06L03)",
+          "Gebruiker stuurt e-mailadres via WhatsApp (M07L01)",
+          "Systeem stuurt test-e-mail naar opgegeven adres",
+          "Gebruiker opent Gmail, leest test-e-mail, beantwoordt met KLAAR",
+          "Systeem verifieert ontvangst e-mailantwoord",
+          "Systeem schakelt over naar e-mailkanaal",
+          "Terugval naar WhatsApp beschikbaar als e-mail mislukt"
+        ],
+        "terugval_conditie": "geen_email_bevestiging_na_72_uur"
+      }
+    },
+
+    "ai_instructies": {
+      "personalisatie": {
+        "taalvereenvoudiging": "Gebruik maximaal A2-niveau Nederlands. Korte zinnen. Geen moeilijke woorden.",
+        "herhaling": "Als een gebruiker 2x fout antwoordt, geef uitgebreidere uitleg en herhaal de vraag in andere bewoording.",
+        "tempo": "Als een gebruiker consistent goed antwoordt, kan een les worden overgeslagen.",
+        "taal_detectie": "Detecteer de taal van het antwoord. Als niet-Nederlands, stuur dezelfde les in de gedetecteerde taal.",
+        "motivatie": "Begin elke les met een aanmoediging gebaseerd op vorige prestatie.",
+        "android_vs_iphone": "Onthoud na M03L02 welk type telefoon de gebruiker heeft. Pas instructies (Play Store vs App Store) aan voor alle volgende lessen."
+      },
+      "uitval_preventie": {
+        "geen_antwoord_1_dag": "Stuur herinnering: Hallo! Je les van vandaag wacht op je. Heb je 5 minuten?",
+        "geen_antwoord_3_dagen": "Stuur: We missen je! Je kunt altijd doorgaan waar je gebleven bent. Stuur START om verder te gaan.",
+        "geen_antwoord_7_dagen": "Markeer als inactief. Stuur eenmalig: DigiDoen staat voor je klaar als je wilt doorgaan. Stuur DOORGAAN.",
+        "hulp_verzoek": "Als gebruiker HULP stuurt, escaleer naar menselijke begeleider via partnerorganisatie binnen 24 uur.",
+        "kanaal_mislukking": "Als kanaalovergang mislukt na 2 pogingen, terug naar vorig kanaal en informeer begeleider."
+      },
+      "voortgang_meting": {
+        "metrics": ["percentage_correct", "doorlooptijd_per_les", "uitval_moment", "kanaal_overgang_gelukt", "telefoon_type"],
+        "rapportage": "Wekelijkse export naar partnerorganisaties in CSV-formaat.",
+        "eindcertificaat": "Stuur PDF-certificaat naar e-mail na succesvolle afronding module M15."
+      }
+    },
+
+    "technische_specificaties": {
+      "sms_max_lengte": 320,
+      "whatsapp_max_lengte": 1000,
+      "email_max_lengte": 5000,
+      "antwoord_timeout_uren": 48,
+      "ondersteunde_talen": ["nl", "ar", "tr", "ti", "so", "en"],
+      "bestandsformaat": "JSON",
+      "encoding": "UTF-8",
+      "versie_schema": "2.0",
+      "api_endpoint": "/api/curriculum/load",
+      "veld_mapping": {
+        "les_id": "id",
+        "dag_nummer": "dag",
+        "sms_content": "sms_bericht",
+        "whatsapp_content": "bericht",
+        "email_content": "bericht",
+        "correct_antwoord": "verwacht_antwoord",
+        "feedback_correct": "bij_goed_antwoord",
+        "feedback_incorrect": "bij_fout_antwoord",
+        "kanaal_overgang_trigger": "overgang_trigger",
+        "kanaal_verificatie_type": "kanaal_verificatie"
+      }
+    }
+  }
+}
