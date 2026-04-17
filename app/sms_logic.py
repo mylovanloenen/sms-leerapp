@@ -180,7 +180,7 @@ def _handle_nl_lesson(user: User, text: str, db: Session) -> str:
     user.pending_quiz_text = lesson_id
     user.pending_quiz_correct = None
     db.commit()
-    return content
+    return content + "\n\n💡 Wil je nu al door? Stuur gewoon je antwoord!"
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

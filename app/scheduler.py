@@ -37,11 +37,11 @@ def _daily_lesson_for(user: User, db: Session) -> str | None:
     # Nog een openstaand antwoord → stuur een herinnering
     if user.pending_quiz_text:
         reminders = {
-            "NL": "👋 Vergeet je les niet! Stuur je antwoord om door te gaan.",
-            "EN": "👋 Don't forget your lesson! Send your answer to continue.",
-            "DE": "👋 Vergiss deine Lektion nicht! Sende deine Antwort.",
-            "FR": "👋 N'oublie pas ta leçon! Envoie ta réponse pour continuer.",
-            "ES": "👋 ¡No olvides tu lección! Envía tu respuesta para continuar.",
+            "NL": "👋 Je dagelijkse herinnering! Stuur je antwoord om door te gaan. Je kunt ook altijd zelf een berichtje sturen als je eerder wil leren.",
+            "EN": "👋 Daily reminder! Send your answer to continue. You can also message anytime to learn earlier.",
+            "DE": "👋 Tägliche Erinnerung! Sende deine Antwort. Du kannst auch jederzeit schreiben.",
+            "FR": "👋 Rappel quotidien! Envoie ta réponse. Tu peux aussi écrire à tout moment.",
+            "ES": "👋 ¡Recordatorio diario! Envía tu respuesta. También puedes escribir en cualquier momento.",
         }
         return reminders.get(lang, reminders["EN"])
 
